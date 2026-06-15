@@ -1,0 +1,181 @@
+{
+  "regioes": [
+    {
+      "nome": "Centro Sul",
+      "bairros": [
+        {
+          "nome": "Lourdes",
+          "tkm": 2414000,
+          "anuncios_ativos": 225,
+          "anuncios_com_leads": 36,
+          "tkm_mais_leads": 720000,
+          "leads_tkm_mais_leads": 8
+        },
+        {
+          "nome": "Santo Agostinho",
+          "tkm": 2362000,
+          "anuncios_ativos": 62,
+          "anuncios_com_leads": 6,
+          "tkm_mais_leads": 790000,
+          "leads_tkm_mais_leads": 8
+        },
+        {
+          "nome": "Funcionários",
+          "tkm": 1977000,
+          "anuncios_ativos": 93,
+          "anuncios_com_leads": 15,
+          "tkm_mais_leads": 650000,
+          "leads_tkm_mais_leads": 10
+        },
+        {
+          "nome": "Savassi",
+          "tkm": 2050000,
+          "anuncios_ativos": 112,
+          "anuncios_com_leads": 20,
+          "tkm_mais_leads": 680000,
+          "leads_tkm_mais_leads": 14
+        },
+        {
+          "nome": "Santa Lúcia",
+          "tkm": 1580000,
+          "anuncios_ativos": 175,
+          "anuncios_com_leads": 34,
+          "tkm_mais_leads": 480000,
+          "leads_tkm_mais_leads": 8
+        },
+        {
+          "nome": "Santo Antônio",
+          "tkm": 1467000,
+          "anuncios_ativos": 150,
+          "anuncios_com_leads": 33,
+          "tkm_mais_leads": 470000,
+          "leads_tkm_mais_leads": 12
+        }
+      ]
+    },
+    {
+      "nome": "Nova Suíça",
+      "bairros": [
+        {
+          "nome": "Gutierrez",
+          "tkm": 1416000,
+          "anuncios_ativos": 137,
+          "anuncios_com_leads": 17,
+          "tkm_mais_leads": 427000,
+          "leads_tkm_mais_leads": 20
+        },
+        {
+          "nome": "Buritis",
+          "tkm": 1223000,
+          "anuncios_ativos": 139,
+          "anuncios_com_leads": 19,
+          "tkm_mais_leads": 485000,
+          "leads_tkm_mais_leads": 6
+        },
+        {
+          "nome": "Nova Suíça",
+          "tkm": 1200000,
+          "anuncios_ativos": 69,
+          "anuncios_com_leads": 14,
+          "tkm_mais_leads": 640000,
+          "leads_tkm_mais_leads": 6
+        },
+        {
+          "nome": "Prado",
+          "tkm": 1313000,
+          "anuncios_ativos": 71,
+          "anuncios_com_leads": 15,
+          "tkm_mais_leads": 1300000,
+          "leads_tkm_mais_leads": 4
+        }
+      ]
+    },
+    {
+      "nome": "Cidade Nova",
+      "bairros": [
+        {
+          "nome": "Cidade Nova",
+          "tkm": 1162000,
+          "anuncios_ativos": 50,
+          "anuncios_com_leads": 13,
+          "tkm_mais_leads": 549000,
+          "leads_tkm_mais_leads": 4
+        },
+        {
+          "nome": "Sagrada Família",
+          "tkm": 959000,
+          "anuncios_ativos": 80,
+          "anuncios_com_leads": 30,
+          "tkm_mais_leads": 499000,
+          "leads_tkm_mais_leads": 9
+        },
+        {
+          "nome": "Santa Tereza",
+          "tkm": 400000,
+          "anuncios_ativos": 21,
+          "anuncios_com_leads": 9,
+          "tkm_mais_leads": 565000,
+          "leads_tkm_mais_leads": 7
+        }
+      ]
+    },
+    {
+      "nome": "Vila da Serra",
+      "bairros": [
+        {
+          "nome": "Vila da Serra",
+          "tkm": 2861000,
+          "anuncios_ativos": 51,
+          "anuncios_com_leads": 7,
+          "tkm_mais_leads": 950000,
+          "leads_tkm_mais_leads": 6
+        },
+        {
+          "nome": "Belvedere",
+          "tkm": 3835000,
+          "anuncios_ativos": 26,
+          "anuncios_com_leads": 6,
+          "tkm_mais_leads": 2500000,
+          "leads_tkm_mais_leads": 2
+        },
+        {
+          "nome": "Vale do Sereno",
+          "tkm": 3000000,
+          "anuncios_ativos": 67,
+          "anuncios_com_leads": 4,
+          "tkm_mais_leads": 1220000,
+          "leads_tkm_mais_leads": 1
+        }
+      ]
+    },
+    {
+      "nome": "Ouro Preto / Santa Amélia",
+      "bairros": [
+        {
+          "nome": "Ouro Preto",
+          "tkm": 1383000,
+          "anuncios_ativos": 53,
+          "anuncios_com_leads": 13,
+          "tkm_mais_leads": 663158,
+          "leads_tkm_mais_leads": 5
+        },
+        {
+          "nome": "Santa Amélia",
+          "tkm": 1068000,
+          "anuncios_ativos": 59,
+          "anuncios_com_leads": 17,
+          "tkm_mais_leads": 640000,
+          "leads_tkm_mais_leads": 9
+        },
+        {
+          "nome": "Castelo",
+          "tkm": 1193000,
+          "anuncios_ativos": 70,
+          "anuncios_com_leads": 14,
+          "tkm_mais_leads": 1200000,
+          "leads_tkm_mais_leads": 4
+        }
+      ]
+    }
+  ]
+}

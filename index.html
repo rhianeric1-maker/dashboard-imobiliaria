@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Imobiliária - Análise de Leads por Região</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2c5282;
+            --accent: #38b2ac;
+            --accent-light: #4fd1c5;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(56, 178, 172, 0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .kpi-card .kpi-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .kpi-card .kpi-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .kpi-card .kpi-sub {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        /* Filter */
+        .filter-bar {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .filter-bar select {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text);
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .filter-bar select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s;
+        }
+
+        .chart-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .chart-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-card.full-width .chart-container {
+            height: 400px;
+        }
+
+        /* Table */
+        .table-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        thead th {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover {
+            background: #f0f9ff;
+        }
+
+        tbody td {
+            padding: 0.7rem 1rem;
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-high {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-mid {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .badge-low {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Dashboard de Performance Imobiliária</h1>
+    <p>Análise de TKM, Anúncios Ativos e Geração de Leads por Bairro e Região</p>
+</div>
+
+<div class="container">
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+        <label for="regionFilter">Filtrar por Região:</label>
+        <select id="regionFilter">
+            <option value="all">Todas as Regiões</option>
+        </select>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <h3>TKM Médio por Bairro (R$)</h3>
+            <div class="chart-container">
+                <canvas id="chartTKM"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3>Anúncios Ativos vs Anúncios que Geraram Leads</h3>
+            <div class="chart-container">
+                <canvas id="chartAnuncios"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3>Taxa de Conversão por Bairro (%)</h3>
+            <div class="chart-container">
+                <canvas id="chartConversao"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h3>TKM que Mais Gerou Leads vs TKM Médio Anunciado</h3>
+            <div class="chart-container">
+                <canvas id="chartComparativo"></canvas>
+            </div>
+        </div>
+        <div class="chart-card full-width">
+            <h3>Leads Gerados pelo TKM de Melhor Performance</h3>
+            <div class="chart-container">
+                <canvas id="chartLeads"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+        <h3>Detalhamento Completo por Bairro</h3>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Região</th>
+                    <th>Bairro</th>
+                    <th>TKM Anunciado</th>
+                    <th>Anúncios Ativos</th>
+                    <th>Com Leads</th>
+                    <th>Taxa Conv.</th>
+                    <th>TKM Top Leads</th>
+                    <th>Leads (Top)</th>
+                    <th>Performance</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="footer">
+    Dashboard Imobiliária &mdash; Dados atualizados em Junho/2025
+</div>
+
+<script>
+// Data
+const data = {
+  "regioes": [
+    {
+      "nome": "Centro Sul",
+      "bairros": [
+        {"nome": "Lourdes", "tkm": 2414000, "anuncios_ativos": 225, "anuncios_com_leads": 36, "tkm_mais_leads": 720000, "leads_tkm_mais_leads": 8},
+        {"nome": "Santo Agostinho", "tkm": 2362000, "anuncios_ativos": 62, "anuncios_com_leads": 6, "tkm_mais_leads": 790000, "leads_tkm_mais_leads": 8},
+        {"nome": "Funcionários", "tkm": 1977000, "anuncios_ativos": 93, "anuncios_com_leads": 15, "tkm_mais_leads": 650000, "leads_tkm_mais_leads": 10},
+        {"nome": "Savassi", "tkm": 2050000, "anuncios_ativos": 112, "anuncios_com_leads": 20, "tkm_mais_leads": 680000, "leads_tkm_mais_leads": 14},
+        {"nome": "Santa Lúcia", "tkm": 1580000, "anuncios_ativos": 175, "anuncios_com_leads": 34, "tkm_mais_leads": 480000, "leads_tkm_mais_leads": 8},
+        {"nome": "Santo Antônio", "tkm": 1467000, "anuncios_ativos": 150, "anuncios_com_leads": 33, "tkm_mais_leads": 470000, "leads_tkm_mais_leads": 12}
+      ]
+    },
+    {
+      "nome": "Nova Suíça",
+      "bairros": [
+        {"nome": "Gutierrez", "tkm": 1416000, "anuncios_ativos": 137, "anuncios_com_leads": 17, "tkm_mais_leads": 427000, "leads_tkm_mais_leads": 20},
+        {"nome": "Buritis", "tkm": 1223000, "anuncios_ativos": 139, "anuncios_com_leads": 19, "tkm_mais_leads": 485000, "leads_tkm_mais_leads": 6},
+        {"nome": "Nova Suíça", "tkm": 1200000, "anuncios_ativos": 69, "anuncios_com_leads": 14, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 6},
+        {"nome": "Prado", "tkm": 1313000, "anuncios_ativos": 71, "anuncios_com_leads": 15, "tkm_mais_leads": 1300000, "leads_tkm_mais_leads": 4}
+      ]
+    },
+    {
+      "nome": "Cidade Nova",
+      "bairros": [
+        {"nome": "Cidade Nova", "tkm": 1162000, "anuncios_ativos": 50, "anuncios_com_leads": 13, "tkm_mais_leads": 549000, "leads_tkm_mais_leads": 4},
+        {"nome": "Sagrada Família", "tkm": 959000, "anuncios_ativos": 80, "anuncios_com_leads": 30, "tkm_mais_leads": 499000, "leads_tkm_mais_leads": 9},
+        {"nome": "Santa Tereza", "tkm": 400000, "anuncios_ativos": 21, "anuncios_com_leads": 9, "tkm_mais_leads": 565000, "leads_tkm_mais_leads": 7}
+      ]
+    },
+    {
+      "nome": "Vila da Serra",
+      "bairros": [
+        {"nome": "Vila da Serra", "tkm": 2861000, "anuncios_ativos": 51, "anuncios_com_leads": 7, "tkm_mais_leads": 950000, "leads_tkm_mais_leads": 6},
+        {"nome": "Belvedere", "tkm": 3835000, "anuncios_ativos": 26, "anuncios_com_leads": 6, "tkm_mais_leads": 2500000, "leads_tkm_mais_leads": 2},
+        {"nome": "Vale do Sereno", "tkm": 3000000, "anuncios_ativos": 67, "anuncios_com_leads": 4, "tkm_mais_leads": 1220000, "leads_tkm_mais_leads": 1}
+      ]
+    },
+    {
+      "nome": "Ouro Preto / Santa Amélia",
+      "bairros": [
+        {"nome": "Ouro Preto", "tkm": 1383000, "anuncios_ativos": 53, "anuncios_com_leads": 13, "tkm_mais_leads": 663158, "leads_tkm_mais_leads": 5},
+        {"nome": "Santa Amélia", "tkm": 1068000, "anuncios_ativos": 59, "anuncios_com_leads": 17, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 9},
+        {"nome": "Castelo", "tkm": 1193000, "anuncios_ativos": 70, "anuncios_com_leads": 14, "tkm_mais_leads": 1200000, "leads_tkm_mais_leads": 4}
+      ]
+    }
+  ]
+};
+
+// Flatten data
+function getAllBairros(regionFilter = 'all') {
+    let bairros = [];
+    data.regioes.forEach(r => {
+        if (regionFilter === 'all' || r.nome === regionFilter) {
+            r.bairros.forEach(b => {
+                bairros.push({...b, regiao: r.nome});
+            });
+        }
+    });
+    return bairros;
+}
+
+// Format currency
+function formatCurrency(value) {
+    return 'R$ ' + value.toLocaleString('pt-BR');
+}
+
+function formatCurrencyShort(value) {
+    if (value >= 1000000) return 'R$ ' + (value / 1000000).toFixed(1) + 'M';
+    if (value >= 1000) return 'R$ ' + (value / 1000).toFixed(0) + 'mil';
+    return 'R$ ' + value;
+}
+
+// Colors
+const regionColors = {
+    'Centro Sul': '#1e3a5f',
+    'Nova Suíça': '#38b2ac',
+    'Cidade Nova': '#e53e3e',
+    'Vila da Serra': '#805ad5',
+    'Ouro Preto / Santa Amélia': '#dd6b20'
+};
+
+const chartColors = [
+    '#1e3a5f', '#38b2ac', '#e53e3e', '#805ad5', '#dd6b20',
+    '#2c5282', '#4fd1c5', '#fc8181', '#b794f4', '#f6ad55',
+    '#2b6cb0', '#81e6d9', '#feb2b2', '#d6bcfa', '#fbd38d',
+    '#3182ce', '#b2f5ea', '#fecaca', '#e9d8fd', '#feebc8',
+    '#4299e1', '#c6f6d5'
+];
+
+// Populate filter
+const filterSelect = document.getElementById('regionFilter');
+data.regioes.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.nome;
+    opt.textContent = r.nome;
+    filterSelect.appendChild(opt);
+});
+
+// Chart instances
+let charts = {};
+
+function renderKPIs(bairros) {
+    const totalAnuncios = bairros.reduce((s, b) => s + b.anuncios_ativos, 0);
+    const totalComLeads = bairros.reduce((s, b) => s + b.anuncios_com_leads, 0);
+    const avgTKM = bairros.reduce((s, b) => s + b.tkm, 0) / bairros.length;
+    const totalLeadsTop = bairros.reduce((s, b) => s + b.leads_tkm_mais_leads, 0);
+    const taxaMedia = ((totalComLeads / totalAnuncios) * 100).toFixed(1);
+
+    document.getElementById('kpiGrid').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-label">Total de Bairros</div>
+            <div class="kpi-value">${bairros.length}</div>
+            <div class="kpi-sub">monitorados</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Anúncios Ativos</div>
+            <div class="kpi-value">${totalAnuncios.toLocaleString('pt-BR')}</div>
+            <div class="kpi-sub">${totalComLeads} geraram leads</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">TKM Médio</div>
+            <div class="kpi-value">${formatCurrencyShort(avgTKM)}</div>
+            <div class="kpi-sub">média geral anunciada</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Taxa de Conversão</div>
+            <div class="kpi-value">${taxaMedia}%</div>
+            <div class="kpi-sub">anúncios → leads</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Leads (Top TKM)</div>
+            <div class="kpi-value">${totalLeadsTop}</div>
+            <div class="kpi-sub">nos TKMs de melhor performance</div>
+        </div>
+    `;
+}
+
+function renderCharts(bairros) {
+    const labels = bairros.map(b => b.nome);
+    const bgColors = bairros.map((b, i) => chartColors[i % chartColors.length]);
+
+    // Destroy existing charts
+    Object.values(charts).forEach(c => c.destroy());
+    charts = {};
+
+    // Chart 1: TKM por Bairro
+    charts.tkm = new Chart(document.getElementById('chartTKM'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'TKM Anunciado',
+                data: bairros.map(b => b.tkm),
+                backgroundColor: bgColors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => formatCurrency(ctx.raw)
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: v => formatCurrencyShort(v)
+                    }
+                },
+                x: {
+                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Anúncios Ativos vs Com Leads
+    charts.anuncios = new Chart(document.getElementById('chartAnuncios'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Anúncios Ativos',
+                    data: bairros.map(b => b.anuncios_ativos),
+                    backgroundColor: 'rgba(30, 58, 95, 0.7)',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Com Leads',
+                    data: bairros.map(b => b.anuncios_com_leads),
+                    backgroundColor: 'rgba(56, 178, 172, 0.8)',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true },
+                x: {
+                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
+                }
+            }
+        }
+    });
+
+    // Chart 3: Taxa de Conversão
+    const taxas = bairros.map(b => ((b.anuncios_com_leads / b.anuncios_ativos) * 100).toFixed(1));
+    charts.conversao = new Chart(document.getElementById('chartConversao'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Taxa de Conversão (%)',
+                data: taxas,
+                backgroundColor: bairros.map((b, i) => {
+                    const t = parseFloat(taxas[i]);
+                    if (t >= 25) return '#48bb78';
+                    if (t >= 15) return '#ecc94b';
+                    return '#fc8181';
+                }),
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ctx.raw + '%'
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: { callback: v => v + '%' }
+                }
+            }
+        }
+    });
+
+    // Chart 4: Comparativo TKM
+    charts.comparativo = new Chart(document.getElementById('chartComparativo'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Bairros',
+                data: bairros.map(b => ({ x: b.tkm, y: b.tkm_mais_leads, label: b.nome })),
+                backgroundColor: bgColors,
+                pointRadius: 10,
+                pointHoverRadius: 14
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: ctx => ctx[0].raw.label || '',
+                        label: ctx => [
+                            'TKM Anunciado: ' + formatCurrency(ctx.raw.x),
+                            'TKM Top Leads: ' + formatCurrency(ctx.raw.y)
+                        ]
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'TKM Anunciado (R$)' },
+                    ticks: { callback: v => formatCurrencyShort(v) }
+                },
+                y: {
+                    title: { display: true, text: 'TKM que Mais Gerou Leads (R$)' },
+                    ticks: { callback: v => formatCurrencyShort(v) }
+                }
+            }
+        }
+    });
+
+    // Chart 5: Leads por TKM de melhor performance
+    charts.leads = new Chart(document.getElementById('chartLeads'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Leads Gerados',
+                data: bairros.map(b => b.leads_tkm_mais_leads),
+                backgroundColor: bgColors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        afterLabel: (ctx) => 'TKM: ' + formatCurrency(bairros[ctx.dataIndex].tkm_mais_leads)
+                    }
+                }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Quantidade de Leads' } },
+                x: {
+                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
+                }
+            }
+        }
+    });
+}
+
+function renderTable(bairros) {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    
+    // Sort by conversion rate descending
+    const sorted = [...bairros].sort((a, b) => {
+        return (b.anuncios_com_leads / b.anuncios_ativos) - (a.anuncios_com_leads / a.anuncios_ativos);
+    });
+
+    sorted.forEach(b => {
+        const taxa = ((b.anuncios_com_leads / b.anuncios_ativos) * 100).toFixed(1);
+        let badgeClass = 'badge-low';
+        let badgeText = 'Baixa';
+        if (parseFloat(taxa) >= 25) { badgeClass = 'badge-high'; badgeText = 'Alta'; }
+        else if (parseFloat(taxa) >= 15) { badgeClass = 'badge-mid'; badgeText = 'Média'; }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${b.regiao}</strong></td>
+            <td>${b.nome}</td>
+            <td>${formatCurrency(b.tkm)}</td>
+            <td>${b.anuncios_ativos}</td>
+            <td>${b.anuncios_com_leads}</td>
+            <td>${taxa}%</td>
+            <td>${formatCurrency(b.tkm_mais_leads)}</td>
+            <td>${b.leads_tkm_mais_leads}</td>
+            <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function render(regionFilter = 'all') {
+    const bairros = getAllBairros(regionFilter);
+    renderKPIs(bairros);
+    renderCharts(bairros);
+    renderTable(bairros);
+}
+
+// Initial render
+render();
+
+// Filter event
+filterSelect.addEventListener('change', (e) => {
+    render(e.target.value);
+});
+</script>
+
+</body>
+</html>
