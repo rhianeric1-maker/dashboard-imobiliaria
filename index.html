@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Imobiliária - Análise de Leads por Região</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -24,11 +23,7 @@
             --radius: 12px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -57,32 +52,41 @@
             border-radius: 50%;
         }
 
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.3rem;
-            position: relative;
+        .header h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem; position: relative; }
+        .header p { font-size: 0.95rem; opacity: 0.85; font-weight: 300; position: relative; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .header p {
-            font-size: 0.95rem;
-            opacity: 0.85;
-            font-weight: 300;
-            position: relative;
+        .tab-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
+        .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         /* KPI Cards */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .kpi-card {
@@ -94,31 +98,10 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .kpi-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .kpi-card .kpi-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-light);
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .kpi-card .kpi-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .kpi-card .kpi-sub {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            margin-top: 0.2rem;
-        }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .kpi-card .kpi-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); font-weight: 600; margin-bottom: 0.3rem; }
+        .kpi-card .kpi-value { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+        .kpi-card .kpi-sub { font-size: 0.7rem; color: var(--text-light); margin-top: 0.2rem; }
 
         /* Filter */
         .filter-bar {
@@ -133,11 +116,7 @@
             flex-wrap: wrap;
         }
 
-        .filter-bar label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text);
-        }
+        .filter-bar label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
 
         .filter-bar select {
             padding: 0.5rem 1rem;
@@ -151,24 +130,17 @@
             transition: border-color 0.2s;
         }
 
-        .filter-bar select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
+        .filter-bar select:focus { outline: none; border-color: var(--accent); }
 
         /* Charts Grid */
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        @media (max-width: 768px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
 
         .chart-card {
             background: var(--card-bg);
@@ -178,12 +150,10 @@
             transition: box-shadow 0.2s;
         }
 
-        .chart-card:hover {
-            box-shadow: var(--shadow-lg);
-        }
+        .chart-card:hover { box-shadow: var(--shadow-lg); }
 
         .chart-card h3 {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 1rem;
@@ -191,18 +161,9 @@
             border-bottom: 2px solid var(--border);
         }
 
-        .chart-container {
-            position: relative;
-            height: 320px;
-        }
-
-        .chart-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .chart-card.full-width .chart-container {
-            height: 400px;
-        }
+        .chart-container { position: relative; height: 300px; }
+        .chart-card.full-width { grid-column: 1 / -1; }
+        .chart-card.full-width .chart-container { height: 380px; }
 
         /* Table */
         .table-card {
@@ -215,7 +176,7 @@
         }
 
         .table-card h3 {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 1rem;
@@ -223,174 +184,209 @@
             border-bottom: 2px solid var(--border);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 
         thead th {
             background: var(--primary);
             color: white;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.8rem;
             text-align: left;
             font-weight: 600;
             white-space: nowrap;
         }
 
-        thead th:first-child {
-            border-radius: 8px 0 0 0;
-        }
+        thead th:first-child { border-radius: 8px 0 0 0; }
+        thead th:last-child { border-radius: 0 8px 0 0; }
 
-        thead th:last-child {
-            border-radius: 0 8px 0 0;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid var(--border);
-            transition: background 0.15s;
-        }
-
-        tbody tr:hover {
-            background: #f0f9ff;
-        }
-
-        tbody td {
-            padding: 0.7rem 1rem;
-            white-space: nowrap;
-        }
+        tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+        tbody tr:hover { background: #f0f9ff; }
+        tbody td { padding: 0.6rem 0.8rem; white-space: nowrap; }
 
         .badge {
             display: inline-block;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
         }
 
-        .badge-high {
-            background: #c6f6d5;
-            color: #22543d;
-        }
+        .badge-high { background: #c6f6d5; color: #22543d; }
+        .badge-mid { background: #fefcbf; color: #744210; }
+        .badge-low { background: #fed7d7; color: #742a2a; }
+        .badge-ativo { background: #c6f6d5; color: #22543d; }
+        .badge-inativo { background: #fed7d7; color: #742a2a; }
 
-        .badge-mid {
-            background: #fefcbf;
-            color: #744210;
-        }
+        .section-hidden { display: none; }
 
-        .badge-low {
-            background: #fed7d7;
-            color: #742a2a;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 1.5rem;
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
+        .footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Dashboard de Performance Imobiliária</h1>
-    <p>Análise de TKM, Anúncios Ativos e Geração de Leads por Bairro e Região</p>
+    <h1>Dashboard de Performance Imobiliaria</h1>
+    <p>Analise de TKM, Anuncios Ativos e Geracao de Leads por Bairro e Regiao</p>
 </div>
 
 <div class="container">
-    <!-- KPI Cards -->
-    <div class="kpi-grid" id="kpiGrid"></div>
-
-    <!-- Filter -->
-    <div class="filter-bar">
-        <label for="regionFilter">Filtrar por Região:</label>
-        <select id="regionFilter">
-            <option value="all">Todas as Regiões</option>
-        </select>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('geral')">Visao Geral por Regiao</button>
+        <button class="tab-btn" onclick="switchTab('detalhado')">Anuncios Detalhados (Ouro Preto / Sta. Amelia / Castelo)</button>
     </div>
 
-    <!-- Charts -->
-    <div class="charts-grid">
-        <div class="chart-card">
-            <h3>TKM Médio por Bairro (R$)</h3>
-            <div class="chart-container">
-                <canvas id="chartTKM"></canvas>
+    <!-- ========== TAB 1: VISAO GERAL ========== -->
+    <div id="tab-geral">
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="filter-bar">
+            <label for="regionFilter">Filtrar por Regiao:</label>
+            <select id="regionFilter">
+                <option value="all">Todas as Regioes</option>
+            </select>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>TKM Medio por Bairro (R$)</h3>
+                <div class="chart-container"><canvas id="chartTKM"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Anuncios Ativos vs Anuncios que Geraram Leads</h3>
+                <div class="chart-container"><canvas id="chartAnuncios"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Taxa de Conversao por Bairro (%)</h3>
+                <div class="chart-container"><canvas id="chartConversao"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>TKM que Mais Gerou Leads vs TKM Medio Anunciado</h3>
+                <div class="chart-container"><canvas id="chartComparativo"></canvas></div>
+            </div>
+            <div class="chart-card full-width">
+                <h3>Leads Gerados pelo TKM de Melhor Performance</h3>
+                <div class="chart-container"><canvas id="chartLeads"></canvas></div>
             </div>
         </div>
-        <div class="chart-card">
-            <h3>Anúncios Ativos vs Anúncios que Geraram Leads</h3>
-            <div class="chart-container">
-                <canvas id="chartAnuncios"></canvas>
-            </div>
-        </div>
-        <div class="chart-card">
-            <h3>Taxa de Conversão por Bairro (%)</h3>
-            <div class="chart-container">
-                <canvas id="chartConversao"></canvas>
-            </div>
-        </div>
-        <div class="chart-card">
-            <h3>TKM que Mais Gerou Leads vs TKM Médio Anunciado</h3>
-            <div class="chart-container">
-                <canvas id="chartComparativo"></canvas>
-            </div>
-        </div>
-        <div class="chart-card full-width">
-            <h3>Leads Gerados pelo TKM de Melhor Performance</h3>
-            <div class="chart-container">
-                <canvas id="chartLeads"></canvas>
-            </div>
+
+        <div class="table-card">
+            <h3>Detalhamento Completo por Bairro</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Regiao</th>
+                        <th>Bairro</th>
+                        <th>TKM Anunciado</th>
+                        <th>Anuncios Ativos</th>
+                        <th>Com Leads</th>
+                        <th>Taxa Conv.</th>
+                        <th>TKM Top Leads</th>
+                        <th>Leads (Top)</th>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Table -->
-    <div class="table-card">
-        <h3>Detalhamento Completo por Bairro</h3>
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>Região</th>
-                    <th>Bairro</th>
-                    <th>TKM Anunciado</th>
-                    <th>Anúncios Ativos</th>
-                    <th>Com Leads</th>
-                    <th>Taxa Conv.</th>
-                    <th>TKM Top Leads</th>
-                    <th>Leads (Top)</th>
-                    <th>Performance</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+    <!-- ========== TAB 2: DETALHADO ========== -->
+    <div id="tab-detalhado" class="section-hidden">
+        <div class="kpi-grid" id="kpiGridDetail"></div>
+
+        <div class="filter-bar">
+            <label for="bairroFilter">Filtrar por Bairro:</label>
+            <select id="bairroFilter">
+                <option value="all">Todos</option>
+                <option value="Santa Amelia">Santa Amelia</option>
+                <option value="Ouro Preto">Ouro Preto</option>
+                <option value="Castelo">Castelo</option>
+            </select>
+            <label for="statusFilter">Status:</label>
+            <select id="statusFilter">
+                <option value="all">Todos</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+            </select>
+            <label for="tipoFilter">Tipo:</label>
+            <select id="tipoFilter">
+                <option value="all">Todos</option>
+            </select>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Distribuicao de Precos por Bairro</h3>
+                <div class="chart-container"><canvas id="chartPrecos"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Anuncios por Tipo de Imovel</h3>
+                <div class="chart-container"><canvas id="chartTipos"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Top 10 Anuncios com Mais Leads</h3>
+                <div class="chart-container"><canvas id="chartTopLeads"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Preco vs Leads (Scatter)</h3>
+                <div class="chart-container"><canvas id="chartScatter"></canvas></div>
+            </div>
+            <div class="chart-card full-width">
+                <h3>Views vs Leads por Anuncio (Top 20 com Leads)</h3>
+                <div class="chart-container"><canvas id="chartViewsLeads"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Lista Completa de Anuncios</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Tipo</th>
+                        <th>Bairro</th>
+                        <th>Endereco</th>
+                        <th>Quartos</th>
+                        <th>Vagas</th>
+                        <th>Area (m2)</th>
+                        <th>Preco</th>
+                        <th>Views</th>
+                        <th>Leads</th>
+                        <th>Status</th>
+                        <th>Destaque</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBodyDetail"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <div class="footer">
-    Dashboard Imobiliária &mdash; Dados atualizados em Junho/2025
+    Dashboard Imobiliaria &mdash; Dados atualizados em Junho/2025 &mdash; LAR IMOVEIS
 </div>
 
 <script>
-// Data
-const data = {
+// ==================== DATA ====================
+const dataGeral = {
   "regioes": [
     {
       "nome": "Centro Sul",
       "bairros": [
         {"nome": "Lourdes", "tkm": 2414000, "anuncios_ativos": 225, "anuncios_com_leads": 36, "tkm_mais_leads": 720000, "leads_tkm_mais_leads": 8},
         {"nome": "Santo Agostinho", "tkm": 2362000, "anuncios_ativos": 62, "anuncios_com_leads": 6, "tkm_mais_leads": 790000, "leads_tkm_mais_leads": 8},
-        {"nome": "Funcionários", "tkm": 1977000, "anuncios_ativos": 93, "anuncios_com_leads": 15, "tkm_mais_leads": 650000, "leads_tkm_mais_leads": 10},
+        {"nome": "Funcionarios", "tkm": 1977000, "anuncios_ativos": 93, "anuncios_com_leads": 15, "tkm_mais_leads": 650000, "leads_tkm_mais_leads": 10},
         {"nome": "Savassi", "tkm": 2050000, "anuncios_ativos": 112, "anuncios_com_leads": 20, "tkm_mais_leads": 680000, "leads_tkm_mais_leads": 14},
-        {"nome": "Santa Lúcia", "tkm": 1580000, "anuncios_ativos": 175, "anuncios_com_leads": 34, "tkm_mais_leads": 480000, "leads_tkm_mais_leads": 8},
-        {"nome": "Santo Antônio", "tkm": 1467000, "anuncios_ativos": 150, "anuncios_com_leads": 33, "tkm_mais_leads": 470000, "leads_tkm_mais_leads": 12}
+        {"nome": "Santa Lucia", "tkm": 1580000, "anuncios_ativos": 175, "anuncios_com_leads": 34, "tkm_mais_leads": 480000, "leads_tkm_mais_leads": 8},
+        {"nome": "Santo Antonio", "tkm": 1467000, "anuncios_ativos": 150, "anuncios_com_leads": 33, "tkm_mais_leads": 470000, "leads_tkm_mais_leads": 12}
       ]
     },
     {
-      "nome": "Nova Suíça",
+      "nome": "Nova Suica",
       "bairros": [
         {"nome": "Gutierrez", "tkm": 1416000, "anuncios_ativos": 137, "anuncios_com_leads": 17, "tkm_mais_leads": 427000, "leads_tkm_mais_leads": 20},
         {"nome": "Buritis", "tkm": 1223000, "anuncios_ativos": 139, "anuncios_com_leads": 19, "tkm_mais_leads": 485000, "leads_tkm_mais_leads": 6},
-        {"nome": "Nova Suíça", "tkm": 1200000, "anuncios_ativos": 69, "anuncios_com_leads": 14, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 6},
+        {"nome": "Nova Suica", "tkm": 1200000, "anuncios_ativos": 69, "anuncios_com_leads": 14, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 6},
         {"nome": "Prado", "tkm": 1313000, "anuncios_ativos": 71, "anuncios_com_leads": 15, "tkm_mais_leads": 1300000, "leads_tkm_mais_leads": 4}
       ]
     },
@@ -398,7 +394,7 @@ const data = {
       "nome": "Cidade Nova",
       "bairros": [
         {"nome": "Cidade Nova", "tkm": 1162000, "anuncios_ativos": 50, "anuncios_com_leads": 13, "tkm_mais_leads": 549000, "leads_tkm_mais_leads": 4},
-        {"nome": "Sagrada Família", "tkm": 959000, "anuncios_ativos": 80, "anuncios_com_leads": 30, "tkm_mais_leads": 499000, "leads_tkm_mais_leads": 9},
+        {"nome": "Sagrada Familia", "tkm": 959000, "anuncios_ativos": 80, "anuncios_com_leads": 30, "tkm_mais_leads": 499000, "leads_tkm_mais_leads": 9},
         {"nome": "Santa Tereza", "tkm": 400000, "anuncios_ativos": 21, "anuncios_com_leads": 9, "tkm_mais_leads": 565000, "leads_tkm_mais_leads": 7}
       ]
     },
@@ -411,48 +407,25 @@ const data = {
       ]
     },
     {
-      "nome": "Ouro Preto / Santa Amélia",
+      "nome": "Ouro Preto / Santa Amelia",
       "bairros": [
         {"nome": "Ouro Preto", "tkm": 1383000, "anuncios_ativos": 53, "anuncios_com_leads": 13, "tkm_mais_leads": 663158, "leads_tkm_mais_leads": 5},
-        {"nome": "Santa Amélia", "tkm": 1068000, "anuncios_ativos": 59, "anuncios_com_leads": 17, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 9},
+        {"nome": "Santa Amelia", "tkm": 1068000, "anuncios_ativos": 59, "anuncios_com_leads": 17, "tkm_mais_leads": 640000, "leads_tkm_mais_leads": 9},
         {"nome": "Castelo", "tkm": 1193000, "anuncios_ativos": 70, "anuncios_com_leads": 14, "tkm_mais_leads": 1200000, "leads_tkm_mais_leads": 4}
       ]
     }
   ]
 };
 
-// Flatten data
-function getAllBairros(regionFilter = 'all') {
-    let bairros = [];
-    data.regioes.forEach(r => {
-        if (regionFilter === 'all' || r.nome === regionFilter) {
-            r.bairros.forEach(b => {
-                bairros.push({...b, regiao: r.nome});
-            });
-        }
-    });
-    return bairros;
-}
+const anunciosData = [{"codigo": "134754", "tipo": "Casa", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Santa Amélia", "endereco": "Avenida da Sinfonia", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 126, "area_total": 120, "preco": 640000.0, "views": 533, "leads": 9}, {"codigo": "126999", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 64, "area_total": 64, "preco": 663158.0, "views": 32, "leads": 5}, {"codigo": "108086", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 240, "area_total": 240, "preco": 1200000.0, "views": 139, "leads": 4}, {"codigo": "65750", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Heitor Sócrates Cardoso", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 2, "area_privativa": 130, "area_total": 400, "preco": 650000.0, "views": 163, "leads": 4}, {"codigo": "86844", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Josino de Brito", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 140, "area_total": 180, "preco": 650000.0, "views": 363, "leads": 4}, {"codigo": "124005", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Paulo Mota", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 85, "area_total": 1000, "preco": 740000.0, "views": 204, "leads": 3}, {"codigo": "104942", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Avenida Guarapari", "quartos": 0, "suites": 0, "banheiros": 2, "vagas": 0, "area_privativa": 77, "area_total": 77, "preco": 1400000.0, "views": 49, "leads": 3}, {"codigo": "56661", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Osório de Morais", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 1, "area_privativa": 110, "area_total": 123, "preco": 590000.0, "views": 238, "leads": 3}, {"codigo": "139762", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Altamiro Avelino Soares", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 127, "area_total": 420, "preco": 740000.0, "views": 106, "leads": 3}, {"codigo": "131654", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Edimburgo", "quartos": 2, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 117, "area_total": 420, "preco": 1080000.0, "views": 179, "leads": 2}, {"codigo": "138432", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Ouro Preto", "endereco": "Rua Professor Domício Murta", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 90, "area_total": 3159, "preco": 800000.0, "views": 199, "leads": 2}, {"codigo": "107666", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 3, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 145, "area_total": 840, "preco": 1400000.0, "views": 50, "leads": 2}, {"codigo": "138002", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Humberto Rosa Teixeira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 3, "area_privativa": 230, "area_total": 181, "preco": 1100000.0, "views": 308, "leads": 2}, {"codigo": "15095", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Tordesilhas", "quartos": 4, "suites": 3, "banheiros": 5, "vagas": 4, "area_privativa": 372, "area_total": 420, "preco": 3000000.0, "views": 34, "leads": 2}, {"codigo": "130396", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Santa Amélia", "endereco": "Avenida Guarapari", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 1, "area_privativa": 90, "area_total": 360, "preco": 820000.0, "views": 56, "leads": 2}, {"codigo": "94788", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Agenor Goulart Filho", "quartos": 3, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 200, "area_total": 180, "preco": 905000.0, "views": 126, "leads": 2}, {"codigo": "104941", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Avenida Guarapari", "quartos": 0, "suites": 0, "banheiros": 1, "vagas": 0, "area_privativa": 39, "area_total": 39, "preco": 600000.0, "views": 30, "leads": 2}, {"codigo": "37738", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Edimburgo", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 100, "area_total": 420, "preco": 850000.0, "views": 92, "leads": 2}, {"codigo": "138790", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Professor Domício Murta", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 61, "area_total": 3159, "preco": 590000.0, "views": 98, "leads": 2}, {"codigo": "142463", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 1, "banheiros": 1, "vagas": 1, "area_privativa": 53, "area_total": 187, "preco": 485000.0, "views": 62, "leads": 2}, {"codigo": "118541", "tipo": "Casa", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Thomaz Naves", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 99, "area_total": 180, "preco": 1100000.0, "views": 25, "leads": 1}, {"codigo": "126995", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 60, "area_total": 60, "preco": 631826.0, "views": 4, "leads": 1}, {"codigo": "105953", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua João Antônio Cardoso", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 200, "area_total": 771, "preco": 950000.0, "views": 51, "leads": 1}, {"codigo": "77752", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Conceição Maia", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 233, "area_total": 360, "preco": 1000000.0, "views": 112, "leads": 1}, {"codigo": "82752", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Pedro Licínio", "quartos": 2, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 140, "area_total": 360, "preco": 700000.0, "views": 121, "leads": 1}, {"codigo": "132113", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Santa Amélia", "endereco": "Rua Coronel Emílio Martins", "quartos": 3, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 350, "area_total": 437, "preco": 1300000.0, "views": 72, "leads": 1}, {"codigo": "135439", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Eduardo Cerqueira", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 244, "area_total": 360, "preco": 910000.0, "views": 235, "leads": 1}, {"codigo": "104881", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Manoel Eustáquio", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 2, "area_privativa": 129, "area_total": 180, "preco": 850000.0, "views": 186, "leads": 1}, {"codigo": "96933", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo da Feira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 73, "area_total": 920, "preco": 578000.0, "views": 114, "leads": 1}, {"codigo": "130383", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Major Laje", "quartos": 4, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 286, "area_total": 300, "preco": 1450000.0, "views": 48, "leads": 1}, {"codigo": "108099", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Pedro Licínio", "quartos": 4, "suites": 2, "banheiros": 5, "vagas": 4, "area_privativa": 254, "area_total": 360, "preco": 3200000.0, "views": 148, "leads": 1}, {"codigo": "132616", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Rodrigo", "quartos": 4, "suites": 3, "banheiros": 4, "vagas": 3, "area_privativa": 202, "area_total": 420, "preco": 1550000.0, "views": 45, "leads": 1}, {"codigo": "137756", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua General Patton", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 105, "area_total": 360, "preco": 839000.0, "views": 156, "leads": 1}, {"codigo": "72633", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Castelo", "endereco": "Rua Desembargador José Satyro", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 210, "area_total": 912, "preco": 1390000.0, "views": 81, "leads": 1}, {"codigo": "105524", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Sintra", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 60, "area_total": 60, "preco": 450000.0, "views": 90, "leads": 1}, {"codigo": "104940", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Avenida Guarapari", "quartos": 0, "suites": 0, "banheiros": 1, "vagas": 0, "area_privativa": 39, "area_total": 39, "preco": 600000.0, "views": 29, "leads": 1}, {"codigo": "139316", "tipo": "Casa de condomínio", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua das Canárias", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 130, "area_total": 219, "preco": 1045000.0, "views": 102, "leads": 1}, {"codigo": "99160", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Cantor Luiz Gonzaga", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 87, "area_total": 420, "preco": 698000.0, "views": 72, "leads": 1}, {"codigo": "139415", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Professor Domício Murta", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 70, "area_total": 2314, "preco": 540000.0, "views": 269, "leads": 1}, {"codigo": "139791", "tipo": "Lote/Terreno", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Virgílio de Melo Franco", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 0, "area_privativa": 360, "area_total": 360, "preco": 490000.0, "views": 97, "leads": 1}, {"codigo": "139882", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 53, "area_total": 18716, "preco": 490000.0, "views": 92, "leads": 1}, {"codigo": "141516", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Augusto Clementino", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 93, "area_total": 360, "preco": 499000.0, "views": 264, "leads": 1}, {"codigo": "76302", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Randolfo Trindade", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 3, "area_privativa": 147, "area_total": 1000, "preco": 1220000.0, "views": 49, "leads": 1}, {"codigo": "143063", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Lamego", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 117, "area_total": 420, "preco": 890000.0, "views": 6, "leads": 1}, {"codigo": "105788", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua José Moura Peçanha", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 249, "area_total": 1000, "preco": 2592000.0, "views": 0, "leads": 0}, {"codigo": "105790", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Rua José Moura Peçanha", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 158, "area_total": 1000, "preco": 1974000.0, "views": 0, "leads": 0}, {"codigo": "105791", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Rua José Moura Peçanha", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 151, "area_total": 1000, "preco": 1851000.0, "views": 0, "leads": 0}, {"codigo": "129262", "tipo": "Casa", "status": "Inativo", "destaque": "Padrão", "bairro": "Santa Amélia", "endereco": "Rua Norte de Minas", "quartos": 2, "suites": 2, "banheiros": 3, "vagas": 1, "area_privativa": 65, "area_total": 65, "preco": 550000.0, "views": 1, "leads": 0}, {"codigo": "129260", "tipo": "Casa", "status": "Inativo", "destaque": "Padrão", "bairro": "Santa Amélia", "endereco": "Rua Norte de Minas", "quartos": 2, "suites": 2, "banheiros": 3, "vagas": 1, "area_privativa": 64, "area_total": 64, "preco": 550000.0, "views": 0, "leads": 0}, {"codigo": "98575", "tipo": "Casa", "status": "Inativo", "destaque": "Padrão", "bairro": "Santa Amélia", "endereco": "Rua Maria Gonçalves Braga", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 87, "area_total": 87, "preco": 595000.0, "views": 1, "leads": 0}, {"codigo": "111075", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Ajuda", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 57, "area_total": 57, "preco": 498000.0, "views": 0, "leads": 0}, {"codigo": "111072", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Ajuda", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 51, "area_total": 51, "preco": 570000.0, "views": 0, "leads": 0}, {"codigo": "100686", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Rua Professor Domício Murta", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 90, "area_total": 90, "preco": 670000.0, "views": 0, "leads": 0}, {"codigo": "93031", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Alcobaça", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 3, "area_privativa": 134, "area_total": 420, "preco": 1795000.0, "views": 0, "leads": 0}, {"codigo": "95379", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Abrantes", "quartos": 4, "suites": 2, "banheiros": 3, "vagas": 2, "area_privativa": 103, "area_total": 103, "preco": 1080227.0, "views": 0, "leads": 0}, {"codigo": "100642", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Engenheiro Pedro Bax", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 78, "area_total": 360, "preco": 689000.0, "views": 0, "leads": 0}, {"codigo": "100565", "tipo": "Cobertura", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Doutor Rubens Guimarães", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 343, "area_total": 343, "preco": 3310000.0, "views": 0, "leads": 0}, {"codigo": "98573", "tipo": "Casa", "status": "Inativo", "destaque": "Padrão", "bairro": "Santa Amélia", "endereco": "Rua Maria Gonçalves Braga", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 88, "area_total": 88, "preco": 595000.0, "views": 0, "leads": 0}, {"codigo": "111073", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Ajuda", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 49, "area_total": 49, "preco": 528000.0, "views": 0, "leads": 0}, {"codigo": "95390", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Abrantes", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 3, "area_privativa": 103, "area_total": 103, "preco": 1450711.0, "views": 0, "leads": 0}, {"codigo": "111097", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Ajuda", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 53, "area_total": 53, "preco": 492000.0, "views": 0, "leads": 0}, {"codigo": "126984", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 69, "area_total": 69, "preco": 711796.0, "views": 0, "leads": 0}, {"codigo": "111079", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Ajuda", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 56, "area_total": 56, "preco": 492000.0, "views": 5, "leads": 0}, {"codigo": "105792", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Rua José Moura Peçanha", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 142, "area_total": 1000, "preco": 1962000.0, "views": 5, "leads": 0}, {"codigo": "125567", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 59, "area_total": 59, "preco": 627800.0, "views": 1, "leads": 0}, {"codigo": "125596", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 59, "area_total": 59, "preco": 678000.0, "views": 1, "leads": 0}, {"codigo": "125565", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 64, "area_total": 64, "preco": 709000.0, "views": 1, "leads": 0}, {"codigo": "125553", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 91, "area_total": 91, "preco": 871000.0, "views": 1, "leads": 0}, {"codigo": "125607", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 55, "area_total": 55, "preco": 633000.0, "views": 1, "leads": 0}, {"codigo": "125617", "tipo": "Cobertura", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 119, "area_total": 119, "preco": 1266000.0, "views": 1, "leads": 0}, {"codigo": "126987", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 69, "area_total": 69, "preco": 723368.0, "views": 0, "leads": 0}, {"codigo": "123409", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Alenquer", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 184, "area_total": 4293, "preco": 900000.0, "views": 116, "leads": 0}, {"codigo": "115350", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Cantor Luiz Gonzaga", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 4, "area_privativa": 279, "area_total": 420, "preco": 1800000.0, "views": 65, "leads": 0}, {"codigo": "104373", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Desembargador José Burnier", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 75, "area_total": 840, "preco": 615000.0, "views": 82, "leads": 0}, {"codigo": "136783", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Abrantes", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 200, "area_total": 420, "preco": 1290000.0, "views": 73, "leads": 0}, {"codigo": "104944", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Avenida Guarapari", "quartos": 0, "suites": 0, "banheiros": 2, "vagas": 0, "area_privativa": 79, "area_total": 79, "preco": 1600000.0, "views": 13, "leads": 0}, {"codigo": "81572", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Comandante Ary Lopes", "quartos": 3, "suites": 2, "banheiros": 4, "vagas": 4, "area_privativa": 256, "area_total": 380, "preco": 1490000.0, "views": 55, "leads": 0}, {"codigo": "135413", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Humberto Rosa Teixeira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 4, "area_privativa": 160, "area_total": 180, "preco": 1035000.0, "views": 143, "leads": 0}, {"codigo": "135074", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Santa Amélia", "endereco": "Rua Mansueto Filizzola", "quartos": 4, "suites": 2, "banheiros": 3, "vagas": 2, "area_privativa": 200, "area_total": 360, "preco": 790000.0, "views": 116, "leads": 0}, {"codigo": "134770", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Altamiro Avelino Soares", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 178, "area_total": 420, "preco": 1180000.0, "views": 50, "leads": 0}, {"codigo": "48088", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Manoel Elias de Aguiar", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 0, "area_privativa": 185, "area_total": 450, "preco": 2400000.0, "views": 17, "leads": 0}, {"codigo": "39220", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Serpa", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 236, "area_total": 420, "preco": 1880000.0, "views": 101, "leads": 0}, {"codigo": "136856", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Ápio Cardoso da Paixão", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 130, "area_total": 180, "preco": 1100000.0, "views": 134, "leads": 0}, {"codigo": "121860", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Heitor Sócrates Cardoso", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 2, "area_privativa": 200, "area_total": 180, "preco": 1680000.0, "views": 65, "leads": 0}, {"codigo": "122658", "tipo": "Lote/Terreno", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Agenor Goulart Filho", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 2, "area_privativa": 180, "area_total": 360, "preco": 1200000.0, "views": 19, "leads": 0}, {"codigo": "101345", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Homero de Oliveira", "quartos": 4, "suites": 2, "banheiros": 6, "vagas": 3, "area_privativa": 226, "area_total": 180, "preco": 1050000.0, "views": 130, "leads": 0}, {"codigo": "101180", "tipo": "Lote/Terreno", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Júlio Soares Santana", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 0, "area_privativa": 765, "area_total": 765, "preco": 1384000.0, "views": 40, "leads": 0}, {"codigo": "88944", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Romualdo Lopes Cançado", "quartos": 4, "suites": 1, "banheiros": 2, "vagas": 3, "area_privativa": 96, "area_total": 890, "preco": 680000.0, "views": 29, "leads": 0}, {"codigo": "130290", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Cecília Fonseca Coutinho", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 139, "area_total": 420, "preco": 960000.0, "views": 79, "leads": 0}, {"codigo": "51544", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Paulo Mota", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 100, "area_total": 8870, "preco": 995000.0, "views": 98, "leads": 0}, {"codigo": "36135", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Paulo Mota", "quartos": 6, "suites": 1, "banheiros": 4, "vagas": 4, "area_privativa": 400, "area_total": 360, "preco": 1500000.0, "views": 34, "leads": 0}, {"codigo": "134768", "tipo": "Cobertura", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Avenida Altamiro Avelino Soares", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 157, "area_total": 420, "preco": 790000.0, "views": 114, "leads": 0}, {"codigo": "106031", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Nízio Torres", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 240, "area_total": 8870, "preco": 1650000.0, "views": 117, "leads": 0}, {"codigo": "131805", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Romualdo Lopes Cançado", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 179, "area_total": 509, "preco": 790000.0, "views": 89, "leads": 0}, {"codigo": "138431", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Fortunato Pinto Júnior", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 372, "area_total": 360, "preco": 1400000.0, "views": 250, "leads": 0}, {"codigo": "96203", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Alcazar", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 5, "area_privativa": 321, "area_total": 510, "preco": 2790000.0, "views": 25, "leads": 0}, {"codigo": "92612", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Paulo Mota", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 10, "area_privativa": 311, "area_total": 1440, "preco": 2500000.0, "views": 41, "leads": 0}, {"codigo": "92462", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Antônio Egydio de Lima", "quartos": 9, "suites": 1, "banheiros": 4, "vagas": 4, "area_privativa": 386, "area_total": 357, "preco": 1600000.0, "views": 43, "leads": 0}, {"codigo": "86810", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua dos Expedicionários", "quartos": 5, "suites": 2, "banheiros": 4, "vagas": 10, "area_privativa": 752, "area_total": 2376, "preco": 4500000.0, "views": 71, "leads": 0}, {"codigo": "82894", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Ouro Preto", "endereco": "Rua João Afonso Moreira", "quartos": 4, "suites": 2, "banheiros": 3, "vagas": 2, "area_privativa": 120, "area_total": 300, "preco": 780000.0, "views": 105, "leads": 0}, {"codigo": "14697", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Comendador Teixeira da Costa", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 6, "area_privativa": 180, "area_total": 561, "preco": 1600000.0, "views": 51, "leads": 0}, {"codigo": "138605", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Desembargador José Satyro", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 140, "area_total": 3515, "preco": 1200000.0, "views": 116, "leads": 0}, {"codigo": "138441", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Guimarães", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 120, "area_total": 420, "preco": 1690000.0, "views": 42, "leads": 0}, {"codigo": "126982", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 69, "area_total": 69, "preco": 724617.0, "views": 11, "leads": 0}, {"codigo": "136631", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Ouro Preto", "endereco": "Rua Professor Domício Murta", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 130, "area_total": 3159, "preco": 1390000.0, "views": 111, "leads": 0}, {"codigo": "118968", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Juiz Francisco Horta", "quartos": 5, "suites": 5, "banheiros": 9, "vagas": 4, "area_privativa": 471, "area_total": 360, "preco": 2600000.0, "views": 126, "leads": 0}, {"codigo": "128687", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Pedro Licínio", "quartos": 5, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 240, "area_total": 180, "preco": 1280000.0, "views": 51, "leads": 0}, {"codigo": "95234", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua João Antônio Cardoso", "quartos": 4, "suites": 2, "banheiros": 4, "vagas": 2, "area_privativa": 228, "area_total": 462, "preco": 1680000.0, "views": 55, "leads": 0}, {"codigo": "100830", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Radeck Muzzi", "quartos": 2, "suites": 0, "banheiros": 2, "vagas": 2, "area_privativa": 76, "area_total": 130, "preco": 595000.0, "views": 85, "leads": 0}, {"codigo": "131467", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Cantor Luiz Gonzaga", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 201, "area_total": 420, "preco": 1190000.0, "views": 63, "leads": 0}, {"codigo": "76608", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Setúbal", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 230, "area_total": 345, "preco": 1050000.0, "views": 144, "leads": 0}, {"codigo": "135811", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua João Antônio Cardoso", "quartos": 4, "suites": 4, "banheiros": 5, "vagas": 4, "area_privativa": 305, "area_total": 501, "preco": 2400000.0, "views": 41, "leads": 0}, {"codigo": "98118", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Oswaldo Braga", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 179, "area_total": 179, "preco": 1000000.0, "views": 64, "leads": 0}, {"codigo": "122254", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Levindo Ignácio Ribeiro", "quartos": 4, "suites": 1, "banheiros": 2, "vagas": 3, "area_privativa": 263, "area_total": 360, "preco": 1900000.0, "views": 93, "leads": 0}, {"codigo": "105676", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Elvas", "quartos": 4, "suites": 2, "banheiros": 5, "vagas": 5, "area_privativa": 415, "area_total": 420, "preco": 1750000.0, "views": 62, "leads": 0}, {"codigo": "115441", "tipo": "Casa", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Cantor Luiz Gonzaga", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 4, "area_privativa": 253, "area_total": 420, "preco": 1820000.0, "views": 55, "leads": 0}, {"codigo": "106510", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo de Tordesilhas", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 76, "area_total": 76, "preco": 950000.0, "views": 29, "leads": 0}, {"codigo": "118345", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Romualdo Lopes Cançado", "quartos": 5, "suites": 2, "banheiros": 3, "vagas": 2, "area_privativa": 348, "area_total": 435, "preco": 2300000.0, "views": 12, "leads": 0}, {"codigo": "105934", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Jesus Machado Gontijo", "quartos": 5, "suites": 1, "banheiros": 4, "vagas": 4, "area_privativa": 366, "area_total": 360, "preco": 1880000.0, "views": 26, "leads": 0}, {"codigo": "132090", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Évora", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 137, "area_total": 420, "preco": 1070000.0, "views": 60, "leads": 0}, {"codigo": "102347", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Monte Raso", "quartos": 2, "suites": 0, "banheiros": 1, "vagas": 1, "area_privativa": 66, "area_total": 66, "preco": 600000.0, "views": 19, "leads": 0}, {"codigo": "67151", "tipo": "Ponto comercial/Loja/Box", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Monteiro Lobato", "quartos": 0, "suites": 0, "banheiros": 1, "vagas": 0, "area_privativa": 31, "area_total": 31, "preco": 620000.0, "views": 38, "leads": 0}, {"codigo": "122191", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Castelo", "endereco": "Rua Castelo Évora", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 4, "area_privativa": 351, "area_total": 420, "preco": 1580000.0, "views": 175, "leads": 0}, {"codigo": "87005", "tipo": "Lote/Terreno", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Edna Brandão Ferreira", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 0, "area_privativa": 360, "area_total": 360, "preco": 1000000.0, "views": 69, "leads": 0}, {"codigo": "86779", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Alcobaça", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 320, "area_total": 420, "preco": 2300000.0, "views": 36, "leads": 0}, {"codigo": "92715", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Monteiro Lobato", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 180, "area_total": 1190, "preco": 930000.0, "views": 74, "leads": 0}, {"codigo": "105782", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Elvas", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 6, "area_privativa": 256, "area_total": 420, "preco": 2700000.0, "views": 57, "leads": 0}, {"codigo": "87321", "tipo": "Lote/Terreno", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Avenida Portugal", "quartos": 0, "suites": 0, "banheiros": 0, "vagas": 30, "area_privativa": 362, "area_total": 1000, "preco": 3000000.0, "views": 34, "leads": 0}, {"codigo": "79727", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Deputado Wilson Tanure", "quartos": 4, "suites": 2, "banheiros": 5, "vagas": 4, "area_privativa": 300, "area_total": 360, "preco": 1900000.0, "views": 60, "leads": 0}, {"codigo": "78771", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Heitor Sócrates Cardoso", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 176, "area_total": 360, "preco": 1500000.0, "views": 78, "leads": 0}, {"codigo": "53736", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua dos Expedicionários", "quartos": 3, "suites": 2, "banheiros": 3, "vagas": 2, "area_privativa": 200, "area_total": 280, "preco": 750000.0, "views": 54, "leads": 0}, {"codigo": "93475", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Engenheiro Pedro Bax", "quartos": 4, "suites": 2, "banheiros": 5, "vagas": 2, "area_privativa": 300, "area_total": 360, "preco": 1200000.0, "views": 102, "leads": 0}, {"codigo": "138572", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Doutor Sylvio Menicucci", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 3, "area_privativa": 197, "area_total": 840, "preco": 1690000.0, "views": 105, "leads": 0}, {"codigo": "88804", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Flor-de-esparódia", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 130, "area_total": 553, "preco": 910000.0, "views": 23, "leads": 0}, {"codigo": "85945", "tipo": "Imóvel comercial", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Leiloeiro José Barros", "quartos": 6, "suites": 0, "banheiros": 8, "vagas": 6, "area_privativa": 279, "area_total": 360, "preco": 1999000.0, "views": 24, "leads": 0}, {"codigo": "58110", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Maria Francisca Gomes", "quartos": 3, "suites": 1, "banheiros": 4, "vagas": 3, "area_privativa": 295, "area_total": 180, "preco": 1300000.0, "views": 33, "leads": 0}, {"codigo": "55725", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Jordânia", "quartos": 4, "suites": 3, "banheiros": 4, "vagas": 6, "area_privativa": 443, "area_total": 720, "preco": 1750000.0, "views": 77, "leads": 0}, {"codigo": "137802", "tipo": "Prédio/Edificio inteiro", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Forluminas", "quartos": 4, "suites": 1, "banheiros": 4, "vagas": 4, "area_privativa": 303, "area_total": 300, "preco": 900000.0, "views": 72, "leads": 0}, {"codigo": "32548", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Cândido Naves", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 240, "area_total": 360, "preco": 1350000.0, "views": 84, "leads": 0}, {"codigo": "139759", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Júlio Soares Santana", "quartos": 3, "suites": 3, "banheiros": 5, "vagas": 3, "area_privativa": 293, "area_total": 552, "preco": 2299000.0, "views": 50, "leads": 0}, {"codigo": "125564", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 55, "area_total": 55, "preco": 605500.0, "views": 0, "leads": 0}, {"codigo": "125566", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 64, "area_total": 64, "preco": 700500.0, "views": 0, "leads": 0}, {"codigo": "139881", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Deputado Salim Nacur", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 60, "area_total": 60, "preco": 520000.0, "views": 76, "leads": 0}, {"codigo": "140087", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Inácio Murta", "quartos": 4, "suites": 0, "banheiros": 2, "vagas": 2, "area_privativa": 196, "area_total": 600, "preco": 1170000.0, "views": 107, "leads": 0}, {"codigo": "128740", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Doutor Rubens Guimarães", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 126, "area_total": 1404, "preco": 999900.0, "views": 118, "leads": 0}, {"codigo": "120428", "tipo": "Apartamento", "status": "Inativo", "destaque": "Padrão", "bairro": "Castelo", "endereco": "Rua Castelo de Abrantes", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 67, "area_total": 67, "preco": 625000.0, "views": 4, "leads": 0}, {"codigo": "141087", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Santa Amélia", "endereco": "Rua Thomaz Naves", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 87, "area_total": 375, "preco": 900000.0, "views": 37, "leads": 0}, {"codigo": "141086", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Thomaz Naves", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 87, "area_total": 375, "preco": 900000.0, "views": 37, "leads": 0}, {"codigo": "141088", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Thomaz Naves", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 90, "area_total": 375, "preco": 1000000.0, "views": 24, "leads": 0}, {"codigo": "140853", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Serpa", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 102, "area_total": 420, "preco": 870000.0, "views": 63, "leads": 0}, {"codigo": "125577", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Augusto Moreira", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 55, "area_total": 55, "preco": 646000.0, "views": 0, "leads": 0}, {"codigo": "141200", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 50, "area_total": 18716, "preco": 520000.0, "views": 46, "leads": 0}, {"codigo": "124045", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 0, "banheiros": 1, "vagas": 1, "area_privativa": 58, "area_total": 18716, "preco": 500000.0, "views": 33, "leads": 0}, {"codigo": "141349", "tipo": "Apartamento", "status": "Inativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Avenida Fleming", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 75, "area_total": 16880, "preco": 920000.0, "views": 18, "leads": 0}, {"codigo": "96135", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 60, "area_total": 18716, "preco": 575000.0, "views": 59, "leads": 0}, {"codigo": "77989", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Guimarães", "quartos": 5, "suites": 1, "banheiros": 4, "vagas": 6, "area_privativa": 512, "area_total": 420, "preco": 2750000.0, "views": 38, "leads": 0}, {"codigo": "140802", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Desembargador José Burnier", "quartos": 2, "suites": 1, "banheiros": 1, "vagas": 2, "area_privativa": 57, "area_total": 483, "preco": 420000.0, "views": 50, "leads": 0}, {"codigo": "141077", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Tordesilhas", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 124, "area_total": 360, "preco": 870000.0, "views": 94, "leads": 0}, {"codigo": "140640", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 2, "suites": 1, "banheiros": 2, "vagas": 1, "area_privativa": 60, "area_total": 18716, "preco": 600000.0, "views": 30, "leads": 0}, {"codigo": "139889", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Castelo", "endereco": "Rua Castelo Elvas", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 220, "area_total": 360, "preco": 1850000.0, "views": 22, "leads": 0}, {"codigo": "142047", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Desembargador José Satyro", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 143, "area_total": 143, "preco": 1300000.0, "views": 22, "leads": 0}, {"codigo": "141620", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Sintra", "quartos": 4, "suites": 1, "banheiros": 2, "vagas": 3, "area_privativa": 165, "area_total": 165, "preco": 1890000.0, "views": 20, "leads": 0}, {"codigo": "142453", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Wady José Alau", "quartos": 1, "suites": 1, "banheiros": 1, "vagas": 1, "area_privativa": 40, "area_total": 500, "preco": 450000.0, "views": 41, "leads": 0}, {"codigo": "50338", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Ouro Preto", "endereco": "Rua Miraselvas", "quartos": 5, "suites": 1, "banheiros": 5, "vagas": 4, "area_privativa": 265, "area_total": 384, "preco": 1690000.0, "views": 37, "leads": 0}, {"codigo": "83668", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua João Antônio Cardoso", "quartos": 5, "suites": 2, "banheiros": 5, "vagas": 6, "area_privativa": 490, "area_total": 557, "preco": 3180000.0, "views": 42, "leads": 0}, {"codigo": "142862", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Avenida Miguel Perrela", "quartos": 3, "suites": 2, "banheiros": 5, "vagas": 3, "area_privativa": 210, "area_total": 420, "preco": 1790000.0, "views": 22, "leads": 0}, {"codigo": "77355", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Conceição Aparecida Augsten", "quartos": 4, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 214, "area_total": 665, "preco": 1075000.0, "views": 20, "leads": 0}, {"codigo": "142942", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Elson Nunes de Souza", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 98, "area_total": 420, "preco": 530000.0, "views": 71, "leads": 0}, {"codigo": "140027", "tipo": "Apartamento", "status": "Ativo", "destaque": "Super Destaque", "bairro": "Castelo", "endereco": "Rua Desembargador José Satyro", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 2, "area_privativa": 138, "area_total": 420, "preco": 790000.0, "views": 28, "leads": 0}, {"codigo": "143132", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo Setúbal", "quartos": 3, "suites": 2, "banheiros": 3, "vagas": 1, "area_privativa": 112, "area_total": 600, "preco": 1249000.0, "views": 5, "leads": 0}, {"codigo": "95684", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque Premium", "bairro": "Santa Amélia", "endereco": "Rua General Patton", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 180, "area_total": 180, "preco": 1290000.0, "views": 7, "leads": 0}, {"codigo": "143158", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Deputado André de Almeida", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 375, "area_total": 720, "preco": 1600000.0, "views": 15, "leads": 0}, {"codigo": "143031", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Abrantes", "quartos": 3, "suites": 3, "banheiros": 4, "vagas": 3, "area_privativa": 148, "area_total": 1260, "preco": 1490000.0, "views": 10, "leads": 0}, {"codigo": "143174", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Desembargador Paulo Mota", "quartos": 3, "suites": 3, "banheiros": 5, "vagas": 3, "area_privativa": 178, "area_total": 178, "preco": 2100000.0, "views": 22, "leads": 0}, {"codigo": "143549", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua José Mendes de Carvalho", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 96, "area_total": 943, "preco": 760000.0, "views": 0, "leads": 0}, {"codigo": "143579", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque Triplo", "bairro": "Ouro Preto", "endereco": "Rua Belterra", "quartos": 6, "suites": 2, "banheiros": 6, "vagas": 2, "area_privativa": 360, "area_total": 360, "preco": 3200000.0, "views": 10, "leads": 0}, {"codigo": "142868", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Praça Jornalista Cici Santos", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 81, "area_total": 7654, "preco": 690000.0, "views": 2, "leads": 0}, {"codigo": "142719", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Castelo de Lisboa", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 95, "area_total": 95, "preco": 550000.0, "views": 13, "leads": 0}, {"codigo": "142858", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Castelo", "endereco": "Rua Doutor Sylvio Menicucci", "quartos": 3, "suites": 1, "banheiros": 2, "vagas": 2, "area_privativa": 96, "area_total": 844, "preco": 840000.0, "views": 14, "leads": 0}, {"codigo": "142029", "tipo": "Casa", "status": "Ativo", "destaque": "Destaque", "bairro": "Santa Amélia", "endereco": "Rua Saide Haddad Antônio", "quartos": 3, "suites": 1, "banheiros": 3, "vagas": 4, "area_privativa": 114, "area_total": 413, "preco": 850000.0, "views": 24, "leads": 0}, {"codigo": "143621", "tipo": "Apartamento", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Sena Madureira", "quartos": 2, "suites": 0, "banheiros": 1, "vagas": 1, "area_privativa": 55, "area_total": 1050, "preco": 480000.0, "views": 3, "leads": 0}, {"codigo": "143651", "tipo": "Cobertura", "status": "Ativo", "destaque": "Destaque", "bairro": "Ouro Preto", "endereco": "Rua Creso Barbi", "quartos": 3, "suites": 0, "banheiros": 2, "vagas": 1, "area_privativa": 130, "area_total": 130, "preco": 695000.0, "views": 1, "leads": 0}];
 
-// Format currency
-function formatCurrency(value) {
-    return 'R$ ' + value.toLocaleString('pt-BR');
-}
-
+// ==================== UTILITIES ====================
+function formatCurrency(value) { return 'R$ ' + value.toLocaleString('pt-BR'); }
 function formatCurrencyShort(value) {
     if (value >= 1000000) return 'R$ ' + (value / 1000000).toFixed(1) + 'M';
     if (value >= 1000) return 'R$ ' + (value / 1000).toFixed(0) + 'mil';
     return 'R$ ' + value;
 }
-
-// Colors
-const regionColors = {
-    'Centro Sul': '#1e3a5f',
-    'Nova Suíça': '#38b2ac',
-    'Cidade Nova': '#e53e3e',
-    'Vila da Serra': '#805ad5',
-    'Ouro Preto / Santa Amélia': '#dd6b20'
-};
 
 const chartColors = [
     '#1e3a5f', '#38b2ac', '#e53e3e', '#805ad5', '#dd6b20',
@@ -462,17 +435,37 @@ const chartColors = [
     '#4299e1', '#c6f6d5'
 ];
 
-// Populate filter
+// ==================== TAB SWITCHING ====================
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    document.getElementById('tab-geral').classList.toggle('section-hidden', tab !== 'geral');
+    document.getElementById('tab-detalhado').classList.toggle('section-hidden', tab !== 'detalhado');
+    
+    if (tab === 'detalhado') renderDetalhado();
+}
+
+// ==================== TAB 1: VISAO GERAL ====================
+function getAllBairros(regionFilter = 'all') {
+    let bairros = [];
+    dataGeral.regioes.forEach(r => {
+        if (regionFilter === 'all' || r.nome === regionFilter) {
+            r.bairros.forEach(b => { bairros.push({...b, regiao: r.nome}); });
+        }
+    });
+    return bairros;
+}
+
 const filterSelect = document.getElementById('regionFilter');
-data.regioes.forEach(r => {
+dataGeral.regioes.forEach(r => {
     const opt = document.createElement('option');
     opt.value = r.nome;
     opt.textContent = r.nome;
     filterSelect.appendChild(opt);
 });
 
-// Chart instances
-let charts = {};
+let chartsGeral = {};
 
 function renderKPIs(bairros) {
     const totalAnuncios = bairros.reduce((s, b) => s + b.anuncios_ativos, 0);
@@ -482,272 +475,221 @@ function renderKPIs(bairros) {
     const taxaMedia = ((totalComLeads / totalAnuncios) * 100).toFixed(1);
 
     document.getElementById('kpiGrid').innerHTML = `
-        <div class="kpi-card">
-            <div class="kpi-label">Total de Bairros</div>
-            <div class="kpi-value">${bairros.length}</div>
-            <div class="kpi-sub">monitorados</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label">Anúncios Ativos</div>
-            <div class="kpi-value">${totalAnuncios.toLocaleString('pt-BR')}</div>
-            <div class="kpi-sub">${totalComLeads} geraram leads</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label">TKM Médio</div>
-            <div class="kpi-value">${formatCurrencyShort(avgTKM)}</div>
-            <div class="kpi-sub">média geral anunciada</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label">Taxa de Conversão</div>
-            <div class="kpi-value">${taxaMedia}%</div>
-            <div class="kpi-sub">anúncios → leads</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-label">Leads (Top TKM)</div>
-            <div class="kpi-value">${totalLeadsTop}</div>
-            <div class="kpi-sub">nos TKMs de melhor performance</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-label">Total de Bairros</div><div class="kpi-value">${bairros.length}</div><div class="kpi-sub">monitorados</div></div>
+        <div class="kpi-card"><div class="kpi-label">Anuncios Ativos</div><div class="kpi-value">${totalAnuncios.toLocaleString('pt-BR')}</div><div class="kpi-sub">${totalComLeads} geraram leads</div></div>
+        <div class="kpi-card"><div class="kpi-label">TKM Medio</div><div class="kpi-value">${formatCurrencyShort(avgTKM)}</div><div class="kpi-sub">media geral anunciada</div></div>
+        <div class="kpi-card"><div class="kpi-label">Taxa de Conversao</div><div class="kpi-value">${taxaMedia}%</div><div class="kpi-sub">anuncios -> leads</div></div>
+        <div class="kpi-card"><div class="kpi-label">Leads (Top TKM)</div><div class="kpi-value">${totalLeadsTop}</div><div class="kpi-sub">nos TKMs de melhor performance</div></div>
     `;
 }
 
-function renderCharts(bairros) {
+function renderChartsGeral(bairros) {
     const labels = bairros.map(b => b.nome);
     const bgColors = bairros.map((b, i) => chartColors[i % chartColors.length]);
+    Object.values(chartsGeral).forEach(c => c.destroy());
+    chartsGeral = {};
 
-    // Destroy existing charts
-    Object.values(charts).forEach(c => c.destroy());
-    charts = {};
-
-    // Chart 1: TKM por Bairro
-    charts.tkm = new Chart(document.getElementById('chartTKM'), {
+    chartsGeral.tkm = new Chart(document.getElementById('chartTKM'), {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'TKM Anunciado',
-                data: bairros.map(b => b.tkm),
-                backgroundColor: bgColors,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => formatCurrency(ctx.raw)
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: v => formatCurrencyShort(v)
-                    }
-                },
-                x: {
-                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
-                }
-            }
-        }
+        data: { labels, datasets: [{ label: 'TKM Anunciado', data: bairros.map(b => b.tkm), backgroundColor: bgColors, borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => formatCurrency(ctx.raw) } } }, scales: { y: { beginAtZero: true, ticks: { callback: v => formatCurrencyShort(v) } }, x: { ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } } } } }
     });
 
-    // Chart 2: Anúncios Ativos vs Com Leads
-    charts.anuncios = new Chart(document.getElementById('chartAnuncios'), {
+    chartsGeral.anuncios = new Chart(document.getElementById('chartAnuncios'), {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Anúncios Ativos',
-                    data: bairros.map(b => b.anuncios_ativos),
-                    backgroundColor: 'rgba(30, 58, 95, 0.7)',
-                    borderRadius: 6
-                },
-                {
-                    label: 'Com Leads',
-                    data: bairros.map(b => b.anuncios_com_leads),
-                    backgroundColor: 'rgba(56, 178, 172, 0.8)',
-                    borderRadius: 6
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'top' }
-            },
-            scales: {
-                y: { beginAtZero: true },
-                x: {
-                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
-                }
-            }
-        }
+        data: { labels, datasets: [ { label: 'Anuncios Ativos', data: bairros.map(b => b.anuncios_ativos), backgroundColor: 'rgba(30, 58, 95, 0.7)', borderRadius: 6 }, { label: 'Com Leads', data: bairros.map(b => b.anuncios_com_leads), backgroundColor: 'rgba(56, 178, 172, 0.8)', borderRadius: 6 } ] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true }, x: { ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } } } } }
     });
 
-    // Chart 3: Taxa de Conversão
     const taxas = bairros.map(b => ((b.anuncios_com_leads / b.anuncios_ativos) * 100).toFixed(1));
-    charts.conversao = new Chart(document.getElementById('chartConversao'), {
+    chartsGeral.conversao = new Chart(document.getElementById('chartConversao'), {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Taxa de Conversão (%)',
-                data: taxas,
-                backgroundColor: bairros.map((b, i) => {
-                    const t = parseFloat(taxas[i]);
-                    if (t >= 25) return '#48bb78';
-                    if (t >= 15) return '#ecc94b';
-                    return '#fc8181';
-                }),
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y',
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => ctx.raw + '%'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    ticks: { callback: v => v + '%' }
-                }
-            }
-        }
+        data: { labels, datasets: [{ label: 'Taxa de Conversao (%)', data: taxas, backgroundColor: bairros.map((b, i) => { const t = parseFloat(taxas[i]); if (t >= 25) return '#48bb78'; if (t >= 15) return '#ecc94b'; return '#fc8181'; }), borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + '%' } } }, scales: { x: { beginAtZero: true, ticks: { callback: v => v + '%' } } } }
     });
 
-    // Chart 4: Comparativo TKM
-    charts.comparativo = new Chart(document.getElementById('chartComparativo'), {
+    chartsGeral.comparativo = new Chart(document.getElementById('chartComparativo'), {
         type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Bairros',
-                data: bairros.map(b => ({ x: b.tkm, y: b.tkm_mais_leads, label: b.nome })),
-                backgroundColor: bgColors,
-                pointRadius: 10,
-                pointHoverRadius: 14
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        title: ctx => ctx[0].raw.label || '',
-                        label: ctx => [
-                            'TKM Anunciado: ' + formatCurrency(ctx.raw.x),
-                            'TKM Top Leads: ' + formatCurrency(ctx.raw.y)
-                        ]
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: { display: true, text: 'TKM Anunciado (R$)' },
-                    ticks: { callback: v => formatCurrencyShort(v) }
-                },
-                y: {
-                    title: { display: true, text: 'TKM que Mais Gerou Leads (R$)' },
-                    ticks: { callback: v => formatCurrencyShort(v) }
-                }
-            }
-        }
+        data: { datasets: [{ label: 'Bairros', data: bairros.map(b => ({ x: b.tkm, y: b.tkm_mais_leads, label: b.nome })), backgroundColor: bgColors, pointRadius: 10, pointHoverRadius: 14 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { title: ctx => ctx[0].raw.label || '', label: ctx => ['TKM Anunciado: ' + formatCurrency(ctx.raw.x), 'TKM Top Leads: ' + formatCurrency(ctx.raw.y)] } } }, scales: { x: { title: { display: true, text: 'TKM Anunciado (R$)' }, ticks: { callback: v => formatCurrencyShort(v) } }, y: { title: { display: true, text: 'TKM que Mais Gerou Leads (R$)' }, ticks: { callback: v => formatCurrencyShort(v) } } } }
     });
 
-    // Chart 5: Leads por TKM de melhor performance
-    charts.leads = new Chart(document.getElementById('chartLeads'), {
+    chartsGeral.leads = new Chart(document.getElementById('chartLeads'), {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Leads Gerados',
-                data: bairros.map(b => b.leads_tkm_mais_leads),
-                backgroundColor: bgColors,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: (ctx) => 'TKM: ' + formatCurrency(bairros[ctx.dataIndex].tkm_mais_leads)
-                    }
-                }
-            },
-            scales: {
-                y: { beginAtZero: true, title: { display: true, text: 'Quantidade de Leads' } },
-                x: {
-                    ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
-                }
-            }
-        }
+        data: { labels, datasets: [{ label: 'Leads Gerados', data: bairros.map(b => b.leads_tkm_mais_leads), backgroundColor: bgColors, borderRadius: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: (ctx) => 'TKM: ' + formatCurrency(bairros[ctx.dataIndex].tkm_mais_leads) } } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Quantidade de Leads' } }, x: { ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } } } } }
     });
 }
 
-function renderTable(bairros) {
+function renderTableGeral(bairros) {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
-    
-    // Sort by conversion rate descending
-    const sorted = [...bairros].sort((a, b) => {
-        return (b.anuncios_com_leads / b.anuncios_ativos) - (a.anuncios_com_leads / a.anuncios_ativos);
-    });
-
+    const sorted = [...bairros].sort((a, b) => (b.anuncios_com_leads / b.anuncios_ativos) - (a.anuncios_com_leads / a.anuncios_ativos));
     sorted.forEach(b => {
         const taxa = ((b.anuncios_com_leads / b.anuncios_ativos) * 100).toFixed(1);
-        let badgeClass = 'badge-low';
-        let badgeText = 'Baixa';
+        let badgeClass = 'badge-low', badgeText = 'Baixa';
         if (parseFloat(taxa) >= 25) { badgeClass = 'badge-high'; badgeText = 'Alta'; }
-        else if (parseFloat(taxa) >= 15) { badgeClass = 'badge-mid'; badgeText = 'Média'; }
-
+        else if (parseFloat(taxa) >= 15) { badgeClass = 'badge-mid'; badgeText = 'Media'; }
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><strong>${b.regiao}</strong></td>
-            <td>${b.nome}</td>
-            <td>${formatCurrency(b.tkm)}</td>
-            <td>${b.anuncios_ativos}</td>
-            <td>${b.anuncios_com_leads}</td>
-            <td>${taxa}%</td>
-            <td>${formatCurrency(b.tkm_mais_leads)}</td>
-            <td>${b.leads_tkm_mais_leads}</td>
-            <td><span class="badge ${badgeClass}">${badgeText}</span></td>
-        `;
+        tr.innerHTML = `<td><strong>${b.regiao}</strong></td><td>${b.nome}</td><td>${formatCurrency(b.tkm)}</td><td>${b.anuncios_ativos}</td><td>${b.anuncios_com_leads}</td><td>${taxa}%</td><td>${formatCurrency(b.tkm_mais_leads)}</td><td>${b.leads_tkm_mais_leads}</td><td><span class="badge ${badgeClass}">${badgeText}</span></td>`;
         tbody.appendChild(tr);
     });
 }
 
-function render(regionFilter = 'all') {
+function renderGeral(regionFilter = 'all') {
     const bairros = getAllBairros(regionFilter);
     renderKPIs(bairros);
-    renderCharts(bairros);
-    renderTable(bairros);
+    renderChartsGeral(bairros);
+    renderTableGeral(bairros);
 }
 
-// Initial render
-render();
+renderGeral();
+filterSelect.addEventListener('change', (e) => renderGeral(e.target.value));
 
-// Filter event
-filterSelect.addEventListener('change', (e) => {
-    render(e.target.value);
-});
+// ==================== TAB 2: DETALHADO ====================
+let chartsDetail = {};
+let detailRendered = false;
+
+function getFilteredAnuncios() {
+    const bairroF = document.getElementById('bairroFilter').value;
+    const statusF = document.getElementById('statusFilter').value;
+    const tipoF = document.getElementById('tipoFilter').value;
+    
+    return anunciosData.filter(a => {
+        if (bairroF !== 'all' && a.bairro !== bairroF) return false;
+        if (statusF !== 'all' && a.status !== statusF) return false;
+        if (tipoF !== 'all' && a.tipo !== tipoF) return false;
+        return true;
+    });
+}
+
+function renderDetalhado() {
+    const filtered = getFilteredAnuncios();
+    
+    // Populate tipo filter (only once)
+    if (!detailRendered) {
+        const tipos = [...new Set(anunciosData.map(a => a.tipo))];
+        const tipoSelect = document.getElementById('tipoFilter');
+        tipos.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            tipoSelect.appendChild(opt);
+        });
+        detailRendered = true;
+    }
+
+    // KPIs
+    const totalAnuncios = filtered.length;
+    const ativos = filtered.filter(a => a.status === 'Ativo').length;
+    const comLeads = filtered.filter(a => a.leads > 0).length;
+    const totalLeads = filtered.reduce((s, a) => s + a.leads, 0);
+    const totalViews = filtered.reduce((s, a) => s + a.views, 0);
+    const precos = filtered.filter(a => a.preco > 0).map(a => a.preco);
+    const precoMedio = precos.length ? precos.reduce((s, p) => s + p, 0) / precos.length : 0;
+
+    document.getElementById('kpiGridDetail').innerHTML = `
+        <div class="kpi-card"><div class="kpi-label">Total Anuncios</div><div class="kpi-value">${totalAnuncios}</div><div class="kpi-sub">${ativos} ativos</div></div>
+        <div class="kpi-card"><div class="kpi-label">Com Leads</div><div class="kpi-value">${comLeads}</div><div class="kpi-sub">${totalLeads} leads total</div></div>
+        <div class="kpi-card"><div class="kpi-label">Total Views</div><div class="kpi-value">${totalViews.toLocaleString('pt-BR')}</div><div class="kpi-sub">visualizacoes</div></div>
+        <div class="kpi-card"><div class="kpi-label">Preco Medio</div><div class="kpi-value">${formatCurrencyShort(precoMedio)}</div><div class="kpi-sub">dos imoveis filtrados</div></div>
+        <div class="kpi-card"><div class="kpi-label">Taxa Conversao</div><div class="kpi-value">${totalAnuncios > 0 ? ((comLeads/totalAnuncios)*100).toFixed(1) : 0}%</div><div class="kpi-sub">anuncios com leads</div></div>
+    `;
+
+    // Destroy old charts
+    Object.values(chartsDetail).forEach(c => c.destroy());
+    chartsDetail = {};
+
+    // Chart: Precos por Bairro (box-like using bar with error)
+    const bairros = ['Santa Amelia', 'Ouro Preto', 'Castelo'];
+    const bairroPrecos = bairros.map(b => {
+        const items = filtered.filter(a => a.bairro === b && a.preco > 0);
+        return items.map(i => i.preco);
+    });
+    const bairroAvg = bairroPrecos.map(p => p.length ? p.reduce((s, v) => s + v, 0) / p.length : 0);
+    const bairroMin = bairroPrecos.map(p => p.length ? Math.min(...p) : 0);
+    const bairroMax = bairroPrecos.map(p => p.length ? Math.max(...p) : 0);
+
+    chartsDetail.precos = new Chart(document.getElementById('chartPrecos'), {
+        type: 'bar',
+        data: {
+            labels: bairros,
+            datasets: [
+                { label: 'Preco Medio', data: bairroAvg, backgroundColor: ['#38b2ac', '#1e3a5f', '#805ad5'], borderRadius: 6 },
+                { label: 'Preco Minimo', data: bairroMin, backgroundColor: ['rgba(56,178,172,0.3)', 'rgba(30,58,95,0.3)', 'rgba(128,90,213,0.3)'], borderRadius: 6 },
+                { label: 'Preco Maximo', data: bairroMax, backgroundColor: ['rgba(56,178,172,0.6)', 'rgba(30,58,95,0.6)', 'rgba(128,90,213,0.6)'], borderRadius: 6 }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + formatCurrency(ctx.raw) } } }, scales: { y: { beginAtZero: true, ticks: { callback: v => formatCurrencyShort(v) } } } }
+    });
+
+    // Chart: Tipos
+    const tipoCount = {};
+    filtered.forEach(a => { tipoCount[a.tipo] = (tipoCount[a.tipo] || 0) + 1; });
+    chartsDetail.tipos = new Chart(document.getElementById('chartTipos'), {
+        type: 'doughnut',
+        data: { labels: Object.keys(tipoCount), datasets: [{ data: Object.values(tipoCount), backgroundColor: chartColors }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+    });
+
+    // Chart: Top 10 Leads
+    const topLeads = [...filtered].filter(a => a.leads > 0).sort((a, b) => b.leads - a.leads).slice(0, 10);
+    chartsDetail.topLeads = new Chart(document.getElementById('chartTopLeads'), {
+        type: 'bar',
+        data: {
+            labels: topLeads.map(a => `${a.codigo} (${a.bairro})`),
+            datasets: [{ label: 'Leads', data: topLeads.map(a => a.leads), backgroundColor: chartColors, borderRadius: 6 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: ctx => formatCurrency(topLeads[ctx.dataIndex].preco) + ' | ' + topLeads[ctx.dataIndex].tipo } } }, scales: { x: { beginAtZero: true } } }
+    });
+
+    // Chart: Scatter Preco vs Leads
+    const withLeads = filtered.filter(a => a.leads > 0 && a.preco > 0);
+    const bairroColors = { 'Santa Amelia': '#38b2ac', 'Ouro Preto': '#1e3a5f', 'Castelo': '#805ad5' };
+    chartsDetail.scatter = new Chart(document.getElementById('chartScatter'), {
+        type: 'scatter',
+        data: {
+            datasets: bairros.map(b => ({
+                label: b,
+                data: withLeads.filter(a => a.bairro === b).map(a => ({ x: a.preco, y: a.leads })),
+                backgroundColor: bairroColors[b],
+                pointRadius: 8,
+                pointHoverRadius: 12
+            }))
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { title: { display: true, text: 'Preco (R$)' }, ticks: { callback: v => formatCurrencyShort(v) } }, y: { title: { display: true, text: 'Leads' }, beginAtZero: true } } }
+    });
+
+    // Chart: Views vs Leads
+    const topViewsLeads = [...filtered].filter(a => a.leads > 0).sort((a, b) => b.leads - a.leads).slice(0, 20);
+    chartsDetail.viewsLeads = new Chart(document.getElementById('chartViewsLeads'), {
+        type: 'bar',
+        data: {
+            labels: topViewsLeads.map(a => a.codigo),
+            datasets: [
+                { label: 'Views', data: topViewsLeads.map(a => a.views), backgroundColor: 'rgba(30, 58, 95, 0.6)', borderRadius: 4, yAxisID: 'y' },
+                { label: 'Leads', data: topViewsLeads.map(a => a.leads), backgroundColor: 'rgba(56, 178, 172, 0.9)', borderRadius: 4, yAxisID: 'y1' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, position: 'left', title: { display: true, text: 'Views' } }, y1: { beginAtZero: true, position: 'right', title: { display: true, text: 'Leads' }, grid: { drawOnChartArea: false } }, x: { ticks: { maxRotation: 45, font: { size: 9 } } } } }
+    });
+
+    // Table
+    const tbody = document.getElementById('tableBodyDetail');
+    tbody.innerHTML = '';
+    const sorted = [...filtered].sort((a, b) => b.leads - a.leads);
+    sorted.forEach(a => {
+        const tr = document.createElement('tr');
+        const statusBadge = a.status === 'Ativo' ? '<span class="badge badge-ativo">Ativo</span>' : '<span class="badge badge-inativo">Inativo</span>';
+        tr.innerHTML = `<td>${a.codigo}</td><td>${a.tipo}</td><td>${a.bairro}</td><td>${a.endereco}</td><td>${a.quartos}</td><td>${a.vagas}</td><td>${a.area_privativa}m2</td><td>${formatCurrency(a.preco)}</td><td>${a.views}</td><td><strong>${a.leads}</strong></td><td>${statusBadge}</td><td>${a.destaque}</td>`;
+        tbody.appendChild(tr);
+    });
+}
+
+// Event listeners for detail filters
+document.getElementById('bairroFilter').addEventListener('change', renderDetalhado);
+document.getElementById('statusFilter').addEventListener('change', renderDetalhado);
+document.getElementById('tipoFilter').addEventListener('change', renderDetalhado);
 </script>
 
 </body>
