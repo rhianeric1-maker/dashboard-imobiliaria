@@ -304,6 +304,7 @@
                 <option value="Castelo">Castelo</option>
                 <option value="Cidade Nova">Cidade Nova</option>
                 <option value="Gutierrez">Gutierrez</option>
+                <option value="Nova Lima">Nova Lima</option>
                 <option value="Nova Suíssa">Nova Suíssa</option>
                 <option value="Ouro Preto">Ouro Preto</option>
                 <option value="Prado">Prado</option>
@@ -370,6 +371,8 @@
         </div>
     
     
+    </div>
+
     <!-- ========== TAB 3: ANALISE ESTRATEGICA ========== -->
     <div id="tab-estrategia" class="section-hidden">
         <div class="kpi-grid">
@@ -395,8 +398,7 @@
             </div>
         </div>
 
-        
-        <div class="kpi-grid" style="margin-top: 2rem;">
+        <div class="kpi-grid" style="margin-top: 1.5rem;">
             <div class="kpi-card" style="border-left-color: #4299e1;">
                 <div class="kpi-label">Investimento Total</div>
                 <div class="kpi-value">R$ 54,940.59</div>
@@ -415,7 +417,7 @@
                 <div class="chart-container"><canvas id="chartInvestimento"></canvas></div>
             </div>
             <div class="chart-card">
-                <h3>Custo por Lead Estimado</h3>
+                <h3>Custo por Canal</h3>
                 <div style="padding: 1rem; font-size: 0.85rem; color: #4a5568;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr style="border-bottom: 1px solid #eee;"><td style="padding: 0.5rem;">Meta</td><td style="text-align: right; font-weight: bold;">R$ 11.347,59</td></tr>
@@ -424,7 +426,6 @@
                         <tr style="border-bottom: 1px solid #eee;"><td style="padding: 0.5rem;">Imovelweb</td><td style="text-align: right; font-weight: bold;">R$ 4.716,00</td></tr>
                         <tr><td style="padding: 0.5rem;">Chaves na Mão</td><td style="text-align: right; font-weight: bold;">R$ 1.592,00</td></tr>
                     </table>
-                    <p style="margin-top: 1rem; font-style: italic; font-size: 0.75rem;">* O investimento em Portais (ZAP) representa 34.6% do budget total.</p>
                 </div>
             </div>
         </div>
@@ -432,47 +433,36 @@
         <div class="charts-grid">
             <div class="chart-card full-width" style="background: #fff; padding: 2rem;">
                 <h3 style="color: #1e3a5f; font-size: 1.2rem; margin-bottom: 1.5rem;">Contexto Estratégico para Decisão</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                     <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
-                        <h4 style="color: #2c5282; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>📊</span> Performance por TKM (ZAP)
-                        </h4>
-                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 1rem;">
-                            A análise mostra que a plataforma ZAP é extremamente eficiente para imóveis de ticket médio e baixo.
-                        </p>
+                        <h4 style="color: #2c5282; margin-bottom: 1rem;">📊 Performance por TKM (ZAP)</h4>
                         <ul style="font-size: 0.85rem; color: #4a5568; padding-left: 1.2rem;">
                             <li style="margin-bottom: 0.5rem;"><strong>Ticket < 500k:</strong> Máxima eficiência. Foco em giro rápido.</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Ticket 500k - 1M:</strong> Maior volume absoluto de leads (190). É o "coração" do faturamento.</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Ticket > 1.5M:</strong> Baixa conversão (0.3%). Servem como vitrine, mas o custo por lead é alto.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Ticket 500k - 1M:</strong> Maior volume absoluto de leads. Coração do negócio.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Ticket > 1.5M:</strong> Baixa conversão. Servem como vitrine institucional.</li>
                         </ul>
                     </div>
                     <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
-                        <h4 style="color: #2c5282; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>🎯</span> Bairros Prioritários
-                        </h4>
-                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 1rem;">
-                            Onde investir seu orçamento de impulsionamento:
-                        </p>
+                        <h4 style="color: #2c5282; margin-bottom: 1rem;">🎯 Bairros Prioritários</h4>
                         <ul style="font-size: 0.85rem; color: #4a5568; padding-left: 1.2rem;">
-                            <li style="margin-bottom: 0.5rem;"><strong>Sagrada Família:</strong> Estrela da plataforma. Alta demanda e conversão real.</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Gutierrez:</strong> Público qualificado com boa resposta a anúncios bem estruturados.</li>
-                            <li style="margin-bottom: 0.5rem;"><strong>Buritis:</strong> ALERTA. Muitos curiosos (views) mas poucos interessados (leads). Revisar fotos/preço.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Sagrada Família:</strong> Estrela da plataforma. Alta demanda real.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Gutierrez:</strong> Público qualificado com boa resposta.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Buritis:</strong> ALERTA. Muitos curiosos, poucos interessados.</li>
                         </ul>
                     </div>
                 </div>
-                
                 <div style="margin-top: 2rem; background: #ebf8ff; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #3182ce;">
                     <h4 style="color: #2c5282; margin-bottom: 0.5rem;">💡 Recomendações Imediatas</h4>
                     <p style="font-size: 0.9rem; color: #2a4365;">
-                        1. <strong>Impulsionar</strong> anúncios no Sagrada Família e Gutierrez na faixa de 500k-900k.<br>
-                        2. <strong>Auditar</strong> os anúncios do Buritis: identificar por que a visualização não vira lead.<br>
-                        3. <strong>Focar</strong> novos anúncios e captações na faixa de 500k a 1M para maximizar o retorno da plataforma ZAP.
+                        1. <strong>Impulsionar</strong> Sagrada Família e Gutierrez na faixa de 500k-900k.<br>
+                        2. <strong>Auditar</strong> Buritis: revisar fotos e descrições.<br>
+                        3. <strong>Focar</strong> novos anúncios na faixa de 500k a 1M para maximizar ROI.
                     </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 </div>
 
 <div class="footer">
@@ -549,13 +539,53 @@ const chartColors = [
 ];
 
 // ==================== TAB SWITCHING ====================
-function switchTab(tab) {
+
+    let invChart = null;
+
+    function switchTab(tab) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        // Find button by onclick attribute or text
         const btns = document.querySelectorAll('.tab-btn');
         btns.forEach(b => {
             if (b.getAttribute('onclick').includes(tab)) b.classList.add('active');
         });
+
+        document.getElementById('tab-geral').style.display = 'none';
+        document.getElementById('tab-detalhado').style.display = 'none';
+        const est = document.getElementById('tab-estrategia');
+        if (est) est.style.display = 'none';
+        
+        const target = document.getElementById('tab-' + (tab === 'estrategia' ? 'estrategia' : tab));
+        if (target) target.style.display = 'block';
+        
+        if (tab === 'detalhado') renderDetalhado();
+        if (tab === 'estrategia') renderInvestimento();
+    }
+
+    function renderInvestimento() {
+        const ctx = document.getElementById('chartInvestimento');
+        if (!ctx) return;
+        if (invChart) invChart.destroy();
+        
+        invChart = new Chart(ctx.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Meta', 'Portal ZAP', 'Imovelweb', 'Chaves na Mao', 'Google Ads'],
+                datasets: [{
+                    data: [11347.59, 19032.0, 4716.0, 1592.0, 18253.0],
+                    backgroundColor: ['#1877F2', '#FF5A5F', '#E53E3E', '#F6AD55', '#4285F4'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+    }
+);
 
         document.getElementById('tab-geral').classList.add('section-hidden');
         document.getElementById('tab-detalhado').classList.add('section-hidden');
