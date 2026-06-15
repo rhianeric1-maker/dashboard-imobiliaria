@@ -12745,13 +12745,13 @@
       "preco_min": 490000.0,
       "preco_max": 4500000.0,
       "tipos": [
-        "Lote/Terreno",
-        "Cobertura",
-        "Casa",
         "Casa de condomínio",
+        "Cobertura",
+        "Imóvel comercial",
+        "Lote/Terreno",
         "Apartamento",
         "Ponto comercial/Loja/Box",
-        "Imóvel comercial"
+        "Casa"
       ],
       "faixa_mais_leads": 600000,
       "leads_na_faixa": 20
@@ -12766,12 +12766,12 @@
       "preco_min": 450000.0,
       "preco_max": 3200000.0,
       "tipos": [
-        "Lote/Terreno",
         "Cobertura",
-        "Casa",
-        "Apartamento",
+        "Lote/Terreno",
         "Prédio/Edificio inteiro",
-        "Ponto comercial/Loja/Box"
+        "Ponto comercial/Loja/Box",
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 700000,
       "leads_na_faixa": 9
@@ -12787,8 +12787,8 @@
       "preco_max": 3310000.0,
       "tipos": [
         "Apartamento",
-        "Cobertura",
-        "Casa"
+        "Casa",
+        "Cobertura"
       ],
       "faixa_mais_leads": 1200000,
       "leads_na_faixa": 4
@@ -12803,13 +12803,13 @@
       "preco_min": 260000.0,
       "preco_max": 6090000.0,
       "tipos": [
-        "Sala/Conjunto",
-        "Lote/Terreno",
         "Cobertura",
-        "Casa",
-        "Apartamento",
+        "Sala/Conjunto",
+        "Imóvel comercial",
+        "Lote/Terreno",
         "Ponto comercial/Loja/Box",
-        "Imóvel comercial"
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 400000,
       "leads_na_faixa": 20
@@ -12824,14 +12824,14 @@
       "preco_min": 330000.0,
       "preco_max": 11313882.0,
       "tipos": [
+        "Flat",
+        "Cobertura",
         "Sala/Conjunto",
         "Lote/Terreno",
-        "Cobertura",
-        "Casa",
-        "Apartamento",
         "Prédio/Edificio inteiro",
         "Ponto comercial/Loja/Box",
-        "Flat"
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 600000,
       "leads_na_faixa": 13
@@ -12846,12 +12846,12 @@
       "preco_min": 420000.0,
       "preco_max": 4300000.0,
       "tipos": [
-        "Sala/Conjunto",
-        "Cobertura",
-        "Casa",
-        "Apartamento",
         "Casa de condomínio",
-        "Ponto comercial/Loja/Box"
+        "Cobertura",
+        "Sala/Conjunto",
+        "Ponto comercial/Loja/Box",
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 500000,
       "leads_na_faixa": 8
@@ -12866,14 +12866,14 @@
       "preco_min": 403000.0,
       "preco_max": 10000000.0,
       "tipos": [
-        "Sala/Conjunto",
-        "Lote/Terreno",
         "Cobertura",
-        "Casa",
-        "Apartamento",
+        "Sala/Conjunto",
+        "Imóvel comercial",
+        "Lote/Terreno",
         "Prédio/Edificio inteiro",
         "Ponto comercial/Loja/Box",
-        "Imóvel comercial"
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 1300000,
       "leads_na_faixa": 7
@@ -12888,14 +12888,14 @@
       "preco_min": 420000.0,
       "preco_max": 3590000.0,
       "tipos": [
-        "Lote/Terreno",
+        "Galpão/Depósito/Armazém",
         "Cobertura",
-        "Casa",
-        "Apartamento",
+        "Imóvel comercial",
+        "Lote/Terreno",
         "Prédio/Edificio inteiro",
         "Ponto comercial/Loja/Box",
-        "Galpão/Depósito/Armazém",
-        "Imóvel comercial"
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 500000,
       "leads_na_faixa": 24
@@ -12911,10 +12911,10 @@
       "preco_max": 3100000.0,
       "tipos": [
         "Cobertura",
-        "Casa",
-        "Apartamento",
+        "Imóvel comercial",
         "Ponto comercial/Loja/Box",
-        "Imóvel comercial"
+        "Apartamento",
+        "Casa"
       ],
       "faixa_mais_leads": 500000,
       "leads_na_faixa": 11
@@ -12929,11 +12929,11 @@
       "preco_min": 449000.0,
       "preco_max": 4500000.0,
       "tipos": [
-        "Sala/Conjunto",
+        "Galpão/Depósito/Armazém",
         "Cobertura",
-        "Casa",
+        "Sala/Conjunto",
         "Apartamento",
-        "Galpão/Depósito/Armazém"
+        "Casa"
       ],
       "faixa_mais_leads": 600000,
       "leads_na_faixa": 15
