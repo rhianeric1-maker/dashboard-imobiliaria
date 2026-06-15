@@ -233,7 +233,6 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('geral')">Visao Geral por Regiao</button>
         <button class="tab-btn" onclick="switchTab('detalhado')">Anuncios Detalhados (11 Bairros)</button>
-        <button class="tab-btn" onclick="switchTab('estrategia')">Analise Estrategica</button>
     </div>
 
     <!-- ========== TAB 1: VISAO GERAL ========== -->
@@ -369,8 +368,9 @@
             </table>
         </div>
     
-    <!-- ========== TAB 3: ANALISE ESTRATEGICA ========== -->
-    <div id="tab-estrategia" class="section-hidden">
+    <!-- ========== ANALISE ESTRATEGICA (SECAO FIXA) ========== -->
+    <div id="tab-estrategia" style="margin-top: 2.5rem; border-top: 3px solid #1e3a5f; padding-top: 2rem;">
+        <h2 style="color: #1e3a5f; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem;">📊 Análise Estratégica</h2>
         <div class="kpi-grid">
             <div class="kpi-card" style="border-left-color: #e53e3e;">
                 <div class="kpi-label">Gargalo Identificado</div>
@@ -437,7 +437,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="footer">
@@ -520,8 +519,6 @@ function switchTab(tab) {
 
         document.getElementById('tab-geral').classList.add('section-hidden');
         document.getElementById('tab-detalhado').classList.add('section-hidden');
-        const est = document.getElementById('tab-estrategia');
-        if (est) est.classList.add('section-hidden');
         
         document.getElementById('tab-' + tab).classList.remove('section-hidden');
         if (tab === 'detalhado') renderDetalhado();
