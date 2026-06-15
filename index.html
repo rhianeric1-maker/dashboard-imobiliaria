@@ -232,7 +232,8 @@
     <!-- Tabs -->
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('geral')">Visao Geral por Regiao</button>
-        <button class="tab-btn" onclick="switchTab('detalhado')">Anuncios Detalhados (7 Bairros)</button>
+        <button class="tab-btn" onclick="switchTab('detalhado')">Anuncios Detalhados (10 Bairros)</button>
+        <button class="tab-btn" onclick="switchTab('estrategia')">Analise Estrategica</button>
     </div>
 
     <!-- ========== TAB 1: VISAO GERAL ========== -->
@@ -366,7 +367,76 @@
                 <tbody id="tableBodyDetail"></tbody>
             </table>
         </div>
+    
+    <!-- ========== TAB 3: ANALISE ESTRATEGICA ========== -->
+    <div id="tab-estrategia" class="section-hidden">
+        <div class="kpi-grid">
+            <div class="kpi-card" style="border-left-color: #e53e3e;">
+                <div class="kpi-label">Gargalo Identificado</div>
+                <div class="kpi-value">Buritis</div>
+                <div class="kpi-sub">Alta visualização, baixa conversão</div>
+            </div>
+            <div class="kpi-card" style="border-left-color: #38b2ac;">
+                <div class="kpi-label">Oportunidade de Ouro</div>
+                <div class="kpi-value">Sagrada Família</div>
+                <div class="kpi-sub">Melhor taxa de conversão (1.13%)</div>
+            </div>
+            <div class="kpi-card" style="border-left-color: #1e3a5f;">
+                <div class="kpi-label">TKM Campeão</div>
+                <div class="kpi-value">< 500k</div>
+                <div class="kpi-sub">1.85 leads por anúncio</div>
+            </div>
+            <div class="kpi-card" style="border-left-color: #dd6b20;">
+                <div class="kpi-label">Zona de Alerta</div>
+                <div class="kpi-value">> 1.5M</div>
+                <div class="kpi-sub">Eficiência 5x menor</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card full-width" style="background: #fff; padding: 2rem;">
+                <h3 style="color: #1e3a5f; font-size: 1.2rem; margin-bottom: 1.5rem;">Contexto Estratégico para Decisão</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+                        <h4 style="color: #2c5282; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>📊</span> Performance por TKM (ZAP)
+                        </h4>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 1rem;">
+                            A análise mostra que a plataforma ZAP é extremamente eficiente para imóveis de ticket médio e baixo.
+                        </p>
+                        <ul style="font-size: 0.85rem; color: #4a5568; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>Ticket < 500k:</strong> Máxima eficiência. Foco em giro rápido.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Ticket 500k - 1M:</strong> Maior volume absoluto de leads (190). É o "coração" do faturamento.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Ticket > 1.5M:</strong> Baixa conversão (0.3%). Servem como vitrine, mas o custo por lead é alto.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+                        <h4 style="color: #2c5282; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span>🎯</span> Bairros Prioritários
+                        </h4>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 1rem;">
+                            Onde investir seu orçamento de impulsionamento:
+                        </p>
+                        <ul style="font-size: 0.85rem; color: #4a5568; padding-left: 1.2rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>Sagrada Família:</strong> Estrela da plataforma. Alta demanda e conversão real.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Gutierrez:</strong> Público qualificado com boa resposta a anúncios bem estruturados.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Buritis:</strong> ALERTA. Muitos curiosos (views) mas poucos interessados (leads). Revisar fotos/preço.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; background: #ebf8ff; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #3182ce;">
+                    <h4 style="color: #2c5282; margin-bottom: 0.5rem;">💡 Recomendações Imediatas</h4>
+                    <p style="font-size: 0.9rem; color: #2a4365;">
+                        1. <strong>Impulsionar</strong> anúncios no Sagrada Família e Gutierrez na faixa de 500k-900k.<br>
+                        2. <strong>Auditar</strong> os anúncios do Buritis: identificar por que a visualização não vira lead.<br>
+                        3. <strong>Focar</strong> novos anúncios e captações na faixa de 500k a 1M para maximizar o retorno da plataforma ZAP.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 <div class="footer">
@@ -444,14 +514,17 @@ const chartColors = [
 
 // ==================== TAB SWITCHING ====================
 function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    document.getElementById('tab-geral').classList.toggle('section-hidden', tab !== 'geral');
-    document.getElementById('tab-detalhado').classList.toggle('section-hidden', tab !== 'detalhado');
-    
-    if (tab === 'detalhado') renderDetalhado();
-}
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        document.getElementById('tab-geral').classList.add('section-hidden');
+        document.getElementById('tab-detalhado').classList.add('section-hidden');
+        const est = document.getElementById('tab-estrategia');
+        if (est) est.classList.add('section-hidden');
+        
+        document.getElementById('tab-' + tab).classList.remove('section-hidden');
+        if (tab === 'detalhado') renderDetalhado();
+    }
 
 // ==================== TAB 1: VISAO GERAL ====================
 function getAllBairros(regionFilter = 'all') {
